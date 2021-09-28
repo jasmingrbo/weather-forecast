@@ -1,4 +1,4 @@
-package ba.grbo.weatherforecast.ui.composables
+package ba.grbo.weatherforecast.presentation.composables
 
 import android.content.res.Configuration
 import androidx.compose.material.ContentAlpha
@@ -8,7 +8,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import ba.grbo.weatherforecast.ui.theme.WeatherForecastTheme
+import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
 @Composable
 fun Hint(isEnabled: Boolean) {

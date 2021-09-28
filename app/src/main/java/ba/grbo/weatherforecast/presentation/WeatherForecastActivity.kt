@@ -19,14 +19,16 @@ import androidx.navigation.compose.rememberNavController
 import ba.grbo.weatherforecast.WeatherForecastScreen.DETAILS
 import ba.grbo.weatherforecast.WeatherForecastScreen.OVERVIEW
 import ba.grbo.weatherforecast.WeatherForecastScreen.SETTINGS
-import ba.grbo.weatherforecast.ui.composables.bodies.CommonBody
-import ba.grbo.weatherforecast.ui.composables.bodies.DetailsBody
-import ba.grbo.weatherforecast.ui.composables.bodies.OverviewBody
-import ba.grbo.weatherforecast.ui.composables.bodies.SettingsBody
-import ba.grbo.weatherforecast.ui.theme.WeatherForecastTheme
+import ba.grbo.weatherforecast.presentation.composables.bodies.CommonBody
+import ba.grbo.weatherforecast.presentation.composables.bodies.DetailsBody
+import ba.grbo.weatherforecast.presentation.composables.bodies.OverviewBody
+import ba.grbo.weatherforecast.presentation.composables.bodies.SettingsBody
+import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

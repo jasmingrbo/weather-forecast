@@ -1,4 +1,4 @@
-package ba.grbo.weatherforecast.ui.theme
+package ba.grbo.weatherforecast.framework.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

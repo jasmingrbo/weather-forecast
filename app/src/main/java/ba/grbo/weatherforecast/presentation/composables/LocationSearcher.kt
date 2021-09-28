@@ -1,4 +1,4 @@
-package ba.grbo.weatherforecast.ui.composables
+package ba.grbo.weatherforecast.presentation.composables
 
 import android.content.res.Configuration
 import androidx.compose.animation.core.AnimationConstants
@@ -29,7 +29,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import ba.grbo.weatherforecast.ui.theme.WeatherForecastTheme
+import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

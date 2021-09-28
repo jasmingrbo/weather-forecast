@@ -1,24 +1,33 @@
-package ba.grbo.weatherforecast.ui.composables
+package ba.grbo.weatherforecast.presentation.composables
 
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import ba.grbo.weatherforecast.ui.theme.WeatherForecastTheme
+import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun AnimatedHint(query: String, isEnabled: Boolean) {
+fun AnimatedResetButton(
+    modifier: Modifier = Modifier,
+    query: String,
+    isEnabled: Boolean,
+    onClick: () -> Unit
+) {
     AnimatedVisibility(
-        visible = query.isEmpty(),
+        visible = query.isNotEmpty(),
         enter = fadeIn(),
         exit = fadeOut()
     ) {
-        Hint(isEnabled)
+        ResetButton(
+            modifier = modifier,
+            isEnabled = isEnabled,
+            onClick = onClick
+        )
     }
 }
 
@@ -32,14 +41,13 @@ fun AnimatedHint(query: String, isEnabled: Boolean) {
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-private fun AnimatedHintNonEmptyEnabledPreview() {
+private fun AnimatedResetButtonNonEmptyEnabledPreview() {
     WeatherForecastTheme {
-        Surface {
-            AnimatedHint(
-                query = "Sarajevo",
-                isEnabled = true
-            )
-        }
+        AnimatedResetButton(
+            query = "Sarajevo",
+            isEnabled = true,
+            onClick = {}
+        )
     }
 }
 
@@ -53,14 +61,13 @@ private fun AnimatedHintNonEmptyEnabledPreview() {
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-private fun AnimatedHintNonEmptyDisabledPreview() {
+private fun AnimatedResetButtonNonEmptyDisabledPreview() {
     WeatherForecastTheme {
-        Surface {
-            AnimatedHint(
-                query = "Sarajevo",
-                isEnabled = false
-            )
-        }
+        AnimatedResetButton(
+            query = "Sarajevo",
+            isEnabled = false,
+            onClick = {}
+        )
     }
 }
 
@@ -74,14 +81,13 @@ private fun AnimatedHintNonEmptyDisabledPreview() {
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-private fun AnimatedHintEmptyEnabledPreview() {
+private fun AnimatedResetButtonEmptyEnabledPreview() {
     WeatherForecastTheme {
-        Surface {
-            AnimatedHint(
-                query = "",
-                isEnabled = true
-            )
-        }
+        AnimatedResetButton(
+            query = "",
+            isEnabled = true,
+            onClick = {}
+        )
     }
 }
 
@@ -95,13 +101,12 @@ private fun AnimatedHintEmptyEnabledPreview() {
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-private fun AnimatedHintEmptyDisabledPreview() {
+private fun AnimatedResetButtonEmptyDisabledPreview() {
     WeatherForecastTheme {
-        Surface {
-            AnimatedHint(
-                query = "",
-                isEnabled = false
-            )
-        }
+        AnimatedResetButton(
+            query = "",
+            isEnabled = false,
+            onClick = {}
+        )
     }
 }

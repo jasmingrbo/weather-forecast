@@ -1,4 +1,4 @@
-package ba.grbo.weatherforecast.ui.composables
+package ba.grbo.weatherforecast.presentation.composables
 
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import ba.grbo.weatherforecast.framework.mics.customFadeIn
 import ba.grbo.weatherforecast.framework.mics.customFadeOut
-import ba.grbo.weatherforecast.ui.theme.WeatherForecastTheme
+import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable

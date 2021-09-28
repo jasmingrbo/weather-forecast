@@ -4,6 +4,7 @@
     package="ba.grbo.weatherforecast">
 
     <application
+        android:name=".framework.mics.WeatherForecastApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

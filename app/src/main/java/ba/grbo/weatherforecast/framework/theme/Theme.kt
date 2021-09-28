@@ -1,4 +1,4 @@
-package ba.grbo.weatherforecast.ui.theme
+package ba.grbo.weatherforecast.framework.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

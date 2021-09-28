@@ -1,9 +1,9 @@
-package ba.grbo.weatherforecast.ui.composables.bodies
+package ba.grbo.weatherforecast.presentation.composables.bodies
 
 import androidx.compose.runtime.Composable
 import ba.grbo.weatherforecast.AppBarCallables
 import ba.grbo.weatherforecast.CommonBodyState
-import ba.grbo.weatherforecast.ui.composables.AppBar
+import ba.grbo.weatherforecast.presentation.composables.AppBar
 
 @Composable
 fun CommonBody(

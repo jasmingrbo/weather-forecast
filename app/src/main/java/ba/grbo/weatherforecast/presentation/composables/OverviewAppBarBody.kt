@@ -1,4 +1,4 @@
-package ba.grbo.weatherforecast.ui.composables
+package ba.grbo.weatherforecast.presentation.composables
 
 import android.content.res.Configuration
 import androidx.compose.animation.core.ExperimentalTransitionApi
@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import ba.grbo.weatherforecast.AppBarCallables.OverviewAppBarCallables
 import ba.grbo.weatherforecast.OverviewAppBarState
 import ba.grbo.weatherforecast.framework.mics.PreviewData
-import ba.grbo.weatherforecast.ui.theme.WeatherForecastTheme
+import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
 @OptIn(ExperimentalTransitionApi::class)
 @Composable
