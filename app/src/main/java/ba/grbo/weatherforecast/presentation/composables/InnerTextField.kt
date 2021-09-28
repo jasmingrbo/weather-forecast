@@ -17,7 +17,7 @@ import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 fun InnerTextField(
     modifier: Modifier = Modifier,
     query: String,
-    isEnabled: Boolean,
+    enabled: Boolean,
     innerTextField: @Composable () -> Unit
 ) {
     Box(
@@ -25,7 +25,7 @@ fun InnerTextField(
         contentAlignment = Alignment.CenterStart
     ) {
         innerTextField()
-        AnimatedHint(query = query, isEnabled = isEnabled)
+        AnimatedHint(query = query, enabled = enabled)
     }
 }
 
@@ -45,7 +45,7 @@ private fun InnerTextFieldNonEmptyEnabledPreview() {
             InnerTextField(
                 modifier = Modifier.fillMaxWidth(),
                 query = "Sarajevo",
-                isEnabled = true,
+                enabled = true,
                 innerTextField = { Text(text = "Sarajevo") },
             )
         }
@@ -68,7 +68,7 @@ private fun InnerTextFieldNonEmptyDisabledPreview() {
             InnerTextField(
                 modifier = Modifier.fillMaxWidth(),
                 query = "Sarajevo",
-                isEnabled = false,
+                enabled = false,
                 innerTextField = { Text(text = "Sarajevo") },
             )
         }
@@ -91,7 +91,7 @@ private fun InnerTextFieldEmptyEnabledPreview() {
             InnerTextField(
                 modifier = Modifier.fillMaxWidth(),
                 query = "",
-                isEnabled = true,
+                enabled = true,
                 innerTextField = { Text(text = "") },
             )
         }
@@ -114,7 +114,7 @@ private fun InnerTextFieldEmptyDisabledPreview() {
             InnerTextField(
                 modifier = Modifier.fillMaxWidth(),
                 query = "",
-                isEnabled = false,
+                enabled = false,
                 innerTextField = { Text(text = "") },
             )
         }

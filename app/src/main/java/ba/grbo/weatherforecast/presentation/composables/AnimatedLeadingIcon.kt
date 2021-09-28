@@ -27,8 +27,8 @@ import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 @Composable
 fun AnimatedLeadingIcon(
     isFocusedTransition: Transition<Boolean>,
-    isEnabled: Boolean,
-    onUpClick: () -> Unit
+    enabled: Boolean,
+    onClick: () -> Unit
 ) {
     isFocusedTransition.AnimatedContent(
         transitionSpec = { createLeadingIconTransitionSpec() },
@@ -36,11 +36,11 @@ fun AnimatedLeadingIcon(
     ) { targetState ->
         if (targetState) UpButton(
             modifier = Modifier.padding(start = 0.dp, end = 8.dp),
-            isEnabled = isEnabled,
-            onClick = onUpClick
+            enabled = enabled,
+            onClick = onClick
         ) else MagnifierIcon(
             modifier = Modifier.padding(start = 12.dp, end = 20.dp),
-            isEnabled = isEnabled
+            enabled = enabled
         )
     }
 }
@@ -80,8 +80,8 @@ private fun AnimatedHintUnfocusedEnabledPreview() {
         Surface {
             AnimatedLeadingIcon(
                 isFocusedTransition = updateTransition(targetState = false, label = ""),
-                isEnabled = true,
-                onUpClick = {}
+                enabled = true,
+                onClick = {}
             )
         }
     }
@@ -102,8 +102,8 @@ private fun AnimatedHintUnfocusedDisabledPreview() {
         Surface {
             AnimatedLeadingIcon(
                 isFocusedTransition = updateTransition(targetState = false, label = ""),
-                isEnabled = false,
-                onUpClick = {}
+                enabled = false,
+                onClick = {}
             )
         }
     }
@@ -124,8 +124,8 @@ private fun AnimatedHintFocusedEnabledPreview() {
         Surface {
             AnimatedLeadingIcon(
                 isFocusedTransition = updateTransition(targetState = true, label = ""),
-                isEnabled = true,
-                onUpClick = {}
+                enabled = true,
+                onClick = {}
             )
         }
     }
@@ -146,8 +146,8 @@ private fun AnimatedHintFocusedDisabledPreview() {
         Surface {
             AnimatedLeadingIcon(
                 isFocusedTransition = updateTransition(targetState = true, label = ""),
-                isEnabled = false,
-                onUpClick = {}
+                enabled = false,
+                onClick = {}
             )
         }
     }

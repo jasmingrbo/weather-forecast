@@ -1,18 +1,20 @@
 package ba.grbo.weatherforecast.presentation.composables.bodies
 
 import androidx.compose.runtime.Composable
-import ba.grbo.weatherforecast.AppBarCallables
-import ba.grbo.weatherforecast.CommonBodyState
+import ba.grbo.weatherforecast.framework.data.CommonBodyEvent
+import ba.grbo.weatherforecast.framework.data.CommonBodyState
 import ba.grbo.weatherforecast.presentation.composables.AppBar
 
 @Composable
 fun CommonBody(
     state: CommonBodyState,
-    callables: AppBarCallables
+    onEvent: (CommonBodyEvent) -> Unit
 ) {
     AppBar(
         state = state.appBarState,
-        callables = callables
+        onEvent = onEvent
     )
     // InternetAvailabilityBanner()
 }
+
+// Add previews

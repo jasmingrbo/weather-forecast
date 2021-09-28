@@ -15,7 +15,7 @@ import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 fun AnimatedResetButton(
     modifier: Modifier = Modifier,
     query: String,
-    isEnabled: Boolean,
+    enabled: Boolean,
     onClick: () -> Unit
 ) {
     AnimatedVisibility(
@@ -25,7 +25,7 @@ fun AnimatedResetButton(
     ) {
         ResetButton(
             modifier = modifier,
-            isEnabled = isEnabled,
+            enabled = enabled,
             onClick = onClick
         )
     }
@@ -45,7 +45,7 @@ private fun AnimatedResetButtonNonEmptyEnabledPreview() {
     WeatherForecastTheme {
         AnimatedResetButton(
             query = "Sarajevo",
-            isEnabled = true,
+            enabled = true,
             onClick = {}
         )
     }
@@ -65,7 +65,7 @@ private fun AnimatedResetButtonNonEmptyDisabledPreview() {
     WeatherForecastTheme {
         AnimatedResetButton(
             query = "Sarajevo",
-            isEnabled = false,
+            enabled = false,
             onClick = {}
         )
     }
@@ -85,7 +85,7 @@ private fun AnimatedResetButtonEmptyEnabledPreview() {
     WeatherForecastTheme {
         AnimatedResetButton(
             query = "",
-            isEnabled = true,
+            enabled = true,
             onClick = {}
         )
     }
@@ -105,7 +105,7 @@ private fun AnimatedResetButtonEmptyDisabledPreview() {
     WeatherForecastTheme {
         AnimatedResetButton(
             query = "",
-            isEnabled = false,
+            enabled = false,
             onClick = {}
         )
     }

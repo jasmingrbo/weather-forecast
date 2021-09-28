@@ -1,60 +1,58 @@
 package ba.grbo.weatherforecast.framework.mics
 
-import ba.grbo.weatherforecast.AppBarCallables.OverviewAppBarCallables
-import ba.grbo.weatherforecast.AppBarState
-import ba.grbo.weatherforecast.OverviewAppBarState
+import ba.grbo.weatherforecast.framework.data.CommonBodyState
 import ba.grbo.weatherforecast.framework.mics.Previewable.OverviewAppBarStates
 
 interface Previewable {
     val overviewAppBarStates: OverviewAppBarStates
-    val overviewAppBarCallables: OverviewAppBarCallables
 
     data class OverviewAppBarStates(
-        val nonEmptyUnfocusedEnabled: AppBarState.Overview,
-        val nonEmptyUnfocusedDisabled: AppBarState.Overview,
-        val emptyFocusedEnabled: AppBarState.Overview,
-        val emptyFocusedDisabled: AppBarState.Overview,
+        val nonEmptyUnfocusedEnabled: CommonBodyState.AppBarState.Overview,
+        val nonEmptyUnfocusedDisabled: CommonBodyState.AppBarState.Overview,
+        val emptyFocusedEnabled: CommonBodyState.AppBarState.Overview,
+        val emptyFocusedDisabled: CommonBodyState.AppBarState.Overview,
     )
 }
 
 val PreviewData: Previewable by lazy {
     object : Previewable {
         override val overviewAppBarStates = OverviewAppBarStates(
-            nonEmptyUnfocusedEnabled = AppBarState.Overview(
-                value = OverviewAppBarState(
+            nonEmptyUnfocusedEnabled = CommonBodyState.AppBarState.Overview(
+                value = CommonBodyState.AppBarState.Overview.OverviewAppBarState(
                     query = "Sarajevo",
-                    isFocused = false,
-                    isEnabled = true
+                    focused = false,
+                    enabled = true,
+                    unfocus = false,
+                    hideKeyboard = false
                 )
             ),
-            nonEmptyUnfocusedDisabled =  AppBarState.Overview(
-                value = OverviewAppBarState(
+            nonEmptyUnfocusedDisabled =  CommonBodyState.AppBarState.Overview(
+                value = CommonBodyState.AppBarState.Overview.OverviewAppBarState(
                     query = "Sarajevo",
-                    isFocused = false,
-                    isEnabled = false
+                    focused = false,
+                    enabled = false,
+                    unfocus = false,
+                    hideKeyboard = false
                 )
             ),
-            emptyFocusedEnabled =  AppBarState.Overview(
-                value = OverviewAppBarState(
+            emptyFocusedEnabled =  CommonBodyState.AppBarState.Overview(
+                value = CommonBodyState.AppBarState.Overview.OverviewAppBarState(
                     query = "",
-                    isFocused = true,
-                    isEnabled = true
+                    focused = true,
+                    enabled = true,
+                    unfocus = false,
+                    hideKeyboard = false
                 )
             ),
-            emptyFocusedDisabled =  AppBarState.Overview(
-                value = OverviewAppBarState(
+            emptyFocusedDisabled =  CommonBodyState.AppBarState.Overview(
+                value = CommonBodyState.AppBarState.Overview.OverviewAppBarState(
                     query = "",
-                    isFocused = true,
-                    isEnabled = false
+                    focused = true,
+                    enabled = false,
+                    unfocus = false,
+                    hideKeyboard = false
                 )
             ),
         )
-        override val overviewAppBarCallables = object : OverviewAppBarCallables {
-            override val onQueryChange: (String) -> Unit = {}
-            override val onFocusChange: (Boolean) -> Unit = {}
-            override val onUpClicked: () -> Unit = {}
-            override val onResetClicked: () -> Unit = {}
-            override val onOverflowClicked: () -> Unit = {}
-        }
     }
 }

@@ -1,12 +1,12 @@
 package ba.grbo.weatherforecast.presentation.composables
 
 import androidx.compose.runtime.Composable
-import ba.grbo.weatherforecast.AppBarCallables.SettingsAppBarCallables
+import ba.grbo.weatherforecast.framework.data.CommonBodyEvent
 
 @Composable
 fun SettingsAppBarBody(
     title: String,
-    callables: SettingsAppBarCallables
+    onEvent: (CommonBodyEvent) -> Unit
 ) {
 
 }

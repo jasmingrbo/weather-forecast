@@ -7,80 +7,20 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import ba.grbo.weatherforecast.AppBarCallables
-import ba.grbo.weatherforecast.AppBarCallables.DetailsAppBarCallables
-import ba.grbo.weatherforecast.AppBarCallables.OverviewAppBarCallables
-import ba.grbo.weatherforecast.AppBarCallables.SettingsAppBarCallables
-import ba.grbo.weatherforecast.AppBarState
+import ba.grbo.weatherforecast.framework.data.CommonBodyEvent
+import ba.grbo.weatherforecast.framework.data.CommonBodyState
 import ba.grbo.weatherforecast.framework.mics.PreviewData
 import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
 @OptIn(ExperimentalTransitionApi::class)
 @Composable
 fun AppBar(
-    state: AppBarState,
-    callables: AppBarCallables
+    state: CommonBodyState.AppBarState,
+    onEvent: (CommonBodyEvent) -> Unit
 ) {
     Column {
-        AppBarBody(state = state, callables = callables)
+        AppBarBody(state = state, onEvent = onEvent)
         Divider()
-    }
-}
-
-@Composable
-private fun AppBarBody(
-    state: AppBarState,
-    callables: AppBarCallables
-) {
-    when (state) {
-        is AppBarState.Overview -> OverviewAppBarBody(state = state, callables = callables)
-        is AppBarState.Details -> DetailsAppBarBody(state = state, callables = callables)
-        is AppBarState.Settings -> SettingsAppBarBody(state = state, callables = callables)
-    }
-}
-
-@Composable
-private fun OverviewAppBarBody(
-    state: AppBarState.Overview,
-    callables: AppBarCallables
-) {
-    when (callables) {
-        is OverviewAppBarCallables -> OverviewAppBarBody(
-            state = state.value,
-            callables = callables
-        )
-        is DetailsAppBarCallables,
-        is SettingsAppBarCallables -> {
-            throw IllegalArgumentException("Wrong callables: ${callables.javaClass.simpleName}")
-        }
-    }
-}
-
-@Composable
-private fun DetailsAppBarBody(
-    state: AppBarState.Details,
-    callables: AppBarCallables
-) {
-    when (callables) {
-        is DetailsAppBarCallables -> DetailsAppBarBody(state = state.value, callables = callables)
-        is OverviewAppBarCallables,
-        is SettingsAppBarCallables -> {
-            throw IllegalArgumentException("Wrong callables: ${callables.javaClass.simpleName}")
-        }
-    }
-}
-
-@Composable
-private fun SettingsAppBarBody(
-    state: AppBarState.Settings,
-    callables: AppBarCallables
-) {
-    when (callables) {
-        is SettingsAppBarCallables -> SettingsAppBarBody(title = state.value, callables = callables)
-        is DetailsAppBarCallables,
-        is OverviewAppBarCallables -> {
-            throw IllegalArgumentException("Wrong callables: ${callables.javaClass.simpleName}")
-        }
     }
 }
 
@@ -99,7 +39,7 @@ private fun OverviewAppBarNonEmptyUnfocusedEnabledPreview() {
         Surface {
             AppBar(
                 state = PreviewData.overviewAppBarStates.nonEmptyUnfocusedEnabled,
-                callables = PreviewData.overviewAppBarCallables
+                onEvent = {}
             )
         }
     }
@@ -120,7 +60,7 @@ private fun OverviewAppBarNonEmptyUnfocusedDisabledPreview() {
         Surface {
             AppBar(
                 state = PreviewData.overviewAppBarStates.nonEmptyUnfocusedDisabled,
-                callables = PreviewData.overviewAppBarCallables
+                onEvent = {}
             )
         }
     }
@@ -141,7 +81,7 @@ private fun OverviewAppBarEmptyFocusedEnabledPreview() {
         Surface {
             AppBar(
                 state = PreviewData.overviewAppBarStates.emptyFocusedEnabled,
-                callables = PreviewData.overviewAppBarCallables
+                onEvent = {}
             )
         }
     }
@@ -162,7 +102,7 @@ private fun OverviewAppBarEmptyFocusedDisabledPreview() {
         Surface {
             AppBar(
                 state = PreviewData.overviewAppBarStates.emptyFocusedDisabled,
-                callables = PreviewData.overviewAppBarCallables
+                onEvent = {}
             )
         }
     }

@@ -23,10 +23,10 @@ import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 @Composable
 fun AnimatedOverflowButton(
     modifier: Modifier = Modifier,
-    isLocationSearcherFocusedTransition: Transition<Boolean>,
+    locationSearcherFocusedTransition: Transition<Boolean>,
     onClick: () -> Unit
 ) {
-    isLocationSearcherFocusedTransition.AnimatedVisibility(
+    locationSearcherFocusedTransition.AnimatedVisibility(
         visible = { isFocused -> !isFocused },
         enter = customFadeIn() + expandHorizontally(
             expandFrom = Alignment.Start,
@@ -58,7 +58,7 @@ private fun AnimatedOverflowButtonUnfocusedPreview() {
     WeatherForecastTheme {
         Surface {
             AnimatedOverflowButton(
-                isLocationSearcherFocusedTransition = updateTransition(
+                locationSearcherFocusedTransition = updateTransition(
                     targetState = false, // location searcher is unfocused
                     label = ""
                 ),
@@ -82,7 +82,7 @@ private fun AnimatedOverflowButtonFocusedPreview() {
     WeatherForecastTheme {
         Surface {
             AnimatedOverflowButton(
-                isLocationSearcherFocusedTransition = updateTransition(
+                locationSearcherFocusedTransition = updateTransition(
                     targetState = true, // location searcher is focused
                     label = ""
                 ),

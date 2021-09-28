@@ -16,7 +16,7 @@ import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 @Composable
 fun ResetButton(
     modifier: Modifier = Modifier,
-    isEnabled: Boolean,
+    enabled: Boolean,
     onClick: () -> Unit,
 ) {
     IconButton(
@@ -27,7 +27,7 @@ fun ResetButton(
             imageVector = Icons.Default.Close,
             contentDescription = "Close",
             tint = MaterialTheme.colors.onSurface.copy(
-                alpha = if (isEnabled) TextFieldDefaults.IconOpacity
+                alpha = if (enabled) TextFieldDefaults.IconOpacity
                 else ContentAlpha.disabled
             )
         )
@@ -47,7 +47,7 @@ fun ResetButton(
 private fun ResetButtonEnabledPreview() {
     WeatherForecastTheme {
         ResetButton(
-            isEnabled = true,
+            enabled = true,
             onClick = {}
         )
     }
@@ -66,7 +66,7 @@ private fun ResetButtonEnabledPreview() {
 private fun ResetButtonDisabledPreview() {
     WeatherForecastTheme {
         ResetButton(
-            isEnabled = false,
+            enabled = false,
             onClick = {}
         )
     }

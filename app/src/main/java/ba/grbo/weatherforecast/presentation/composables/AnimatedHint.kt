@@ -12,13 +12,13 @@ import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun AnimatedHint(query: String, isEnabled: Boolean) {
+fun AnimatedHint(query: String, enabled: Boolean) {
     AnimatedVisibility(
         visible = query.isEmpty(),
         enter = fadeIn(),
         exit = fadeOut()
     ) {
-        Hint(isEnabled)
+        Hint(enabled = enabled)
     }
 }
 
@@ -37,7 +37,7 @@ private fun AnimatedHintNonEmptyEnabledPreview() {
         Surface {
             AnimatedHint(
                 query = "Sarajevo",
-                isEnabled = true
+                enabled = true
             )
         }
     }
@@ -58,7 +58,7 @@ private fun AnimatedHintNonEmptyDisabledPreview() {
         Surface {
             AnimatedHint(
                 query = "Sarajevo",
-                isEnabled = false
+                enabled = false
             )
         }
     }
@@ -79,7 +79,7 @@ private fun AnimatedHintEmptyEnabledPreview() {
         Surface {
             AnimatedHint(
                 query = "",
-                isEnabled = true
+                enabled = true
             )
         }
     }
@@ -100,7 +100,7 @@ private fun AnimatedHintEmptyDisabledPreview() {
         Surface {
             AnimatedHint(
                 query = "",
-                isEnabled = false
+                enabled = false
             )
         }
     }

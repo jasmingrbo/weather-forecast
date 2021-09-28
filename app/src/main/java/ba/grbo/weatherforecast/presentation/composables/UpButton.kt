@@ -16,7 +16,7 @@ import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 @Composable
 fun UpButton(
     modifier: Modifier = Modifier,
-    isEnabled: Boolean,
+    enabled: Boolean,
     onClick: () -> Unit
 ) {
     IconButton(
@@ -27,7 +27,7 @@ fun UpButton(
             imageVector = Icons.Default.ArrowBack,
             contentDescription = "ArrowBack",
             tint = MaterialTheme.colors.onSurface.copy(
-                alpha = if (isEnabled) TextFieldDefaults.IconOpacity
+                alpha = if (enabled) TextFieldDefaults.IconOpacity
                 else ContentAlpha.disabled
             )
         )
@@ -47,7 +47,7 @@ fun UpButton(
 private fun UpButtonEnabledPreview() {
     WeatherForecastTheme {
         UpButton(
-            isEnabled = true,
+            enabled = true,
             onClick = {}
         )
     }
@@ -66,7 +66,7 @@ private fun UpButtonEnabledPreview() {
 private fun UpButtonDisabledPreview() {
     WeatherForecastTheme {
         UpButton(
-            isEnabled = false,
+            enabled = false,
             onClick = {}
         )
     }

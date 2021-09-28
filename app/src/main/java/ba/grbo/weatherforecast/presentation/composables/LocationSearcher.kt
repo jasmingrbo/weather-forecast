@@ -36,20 +36,27 @@ import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 fun LocationSearcher(
     modifier: Modifier = Modifier,
     query: String,
-    isEnabled: Boolean,
-    isFocusedTransition: Transition<Boolean>,
+    enabled: Boolean,
+    hideKeyboard: Boolean,
+    focusedTransition: Transition<Boolean>,
     onQueryChange: (String) -> Unit,
     onFocusChanged: (Boolean) -> Unit,
-    onUpClick: () -> Unit,
-    onResetClick: () -> Unit
+    onUpButtonClick: () -> Unit,
+    onResetButtonClick: () -> Unit,
+    onDoneImeActionPressed: () -> Unit,
+    onSoftwareKeyboardHidden: () -> Unit
 ) {
     val endPadding by createHorizontalPadding(
-        isFocusedTransition = isFocusedTransition,
+        isFocusedTransition = focusedTransition,
         focusedPadding = 12.dp,
         unfocusedPadding = 2.dp
     )
 
-    val keyboardController = LocalSoftwareKeyboardController.current
+    if (hideKeyboard) {
+        LocalSoftwareKeyboardController.current?.hide()
+        onSoftwareKeyboardHidden()
+    }
+
     BasicTextField(
         modifier = modifier
             .padding(start = 12.dp, end = endPadding, top = 8.dp, bottom = 8.dp)
@@ -58,23 +65,23 @@ fun LocationSearcher(
         onValueChange = onQueryChange,
         textStyle = LocalTextStyle.current.copy(
             color = LocalContentColor.current.copy(
-                if (isEnabled) LocalContentAlpha.current
+                if (enabled) LocalContentAlpha.current
                 else ContentAlpha.disabled
             )
         ),
         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-        keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
+        keyboardActions = KeyboardActions(onDone = { onDoneImeActionPressed() }),
         singleLine = true,
-        enabled = isEnabled,
+        enabled = enabled,
         cursorBrush = SolidColor(MaterialTheme.colors.primary),
         decorationBox = { innerTextField ->
             LocationSearcherDecorationBox(
                 query = query,
-                isEnabled = isEnabled,
-                isFocusedTransition = isFocusedTransition,
+                enabled = enabled,
+                isFocusedTransition = focusedTransition,
                 innerTextField = innerTextField,
-                onUpClick = onUpClick,
-                onResetClick = onResetClick
+                onUpButtonClick = onUpButtonClick,
+                onResetButtonClick = onResetButtonClick
             )
         }
     )
@@ -110,12 +117,15 @@ private fun LocationSearcherNonEmptyUnfocusedEnabledPreview() {
         Surface {
             LocationSearcher(
                 query = "Sarajevo",
-                isEnabled = true,
-                isFocusedTransition = updateTransition(targetState = false, label = ""),
+                enabled = true,
+                hideKeyboard = false,
+                focusedTransition = updateTransition(targetState = false, label = ""),
                 onQueryChange = {},
                 onFocusChanged = {},
-                onUpClick = {},
-                onResetClick = {}
+                onUpButtonClick = {},
+                onResetButtonClick = {},
+                onDoneImeActionPressed = {},
+                onSoftwareKeyboardHidden = {}
             )
         }
     }
@@ -136,12 +146,15 @@ private fun LocationSearcherNonEmptyUnfocusedDisabledPreview() {
         Surface {
             LocationSearcher(
                 query = "Sarajevo",
-                isEnabled = false,
-                isFocusedTransition = updateTransition(targetState = false, label = ""),
+                enabled = false,
+                hideKeyboard = false,
+                focusedTransition = updateTransition(targetState = false, label = ""),
                 onQueryChange = {},
                 onFocusChanged = {},
-                onUpClick = {},
-                onResetClick = {}
+                onUpButtonClick = {},
+                onResetButtonClick = {},
+                onDoneImeActionPressed = {},
+                onSoftwareKeyboardHidden = {}
             )
         }
     }
@@ -162,12 +175,15 @@ private fun LocationSearcherEmptyFocusedEnabledPreview() {
         Surface {
             LocationSearcher(
                 query = "",
-                isEnabled = true,
-                isFocusedTransition = updateTransition(targetState = true, label = ""),
+                enabled = true,
+                hideKeyboard = false,
+                focusedTransition = updateTransition(targetState = true, label = ""),
                 onQueryChange = {},
                 onFocusChanged = {},
-                onUpClick = {},
-                onResetClick = {}
+                onUpButtonClick = {},
+                onResetButtonClick = {},
+                onDoneImeActionPressed = {},
+                onSoftwareKeyboardHidden = {}
             )
         }
     }
@@ -188,12 +204,15 @@ private fun LocationSearcherEmptyFocusedDisabledPreview() {
         Surface {
             LocationSearcher(
                 query = "",
-                isEnabled = false,
-                isFocusedTransition = updateTransition(targetState = true, label = ""),
+                enabled = false,
+                hideKeyboard = false,
+                focusedTransition = updateTransition(targetState = true, label = ""),
                 onQueryChange = {},
                 onFocusChanged = {},
-                onUpClick = {},
-                onResetClick = {}
+                onUpButtonClick = {},
+                onResetButtonClick = {},
+                onDoneImeActionPressed = {},
+                onSoftwareKeyboardHidden = {}
             )
         }
     }

@@ -24,11 +24,11 @@ import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 @Composable
 fun LocationSearcherDecorationBox(
     query: String,
-    isEnabled: Boolean,
+    enabled: Boolean,
     isFocusedTransition: Transition<Boolean>,
     innerTextField: @Composable () -> Unit,
-    onUpClick: () -> Unit,
-    onResetClick: () -> Unit
+    onUpButtonClick: () -> Unit,
+    onResetButtonClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -43,20 +43,20 @@ fun LocationSearcherDecorationBox(
     ) {
         AnimatedLeadingIcon(
             isFocusedTransition = isFocusedTransition,
-            isEnabled = isEnabled,
-            onUpClick = onUpClick
+            enabled = enabled,
+            onClick = onUpButtonClick
         )
         InnerTextField(
             modifier = Modifier.weight(1f),
             query = query,
-            isEnabled = isEnabled,
+            enabled = enabled,
             innerTextField = innerTextField
         )
         AnimatedResetButton(
             modifier = Modifier.padding(start = 4.dp, end = 0.dp),
             query = query,
-            isEnabled = isEnabled,
-            onClick = onResetClick
+            enabled = enabled,
+            onClick = onResetButtonClick
         )
     }
 }
@@ -76,11 +76,11 @@ private fun LocationSearcherDecorationBoxNonEmptyEnabledPreview() {
         Surface {
             LocationSearcherDecorationBox(
                 query = "Sarajevo",
-                isEnabled = true,
+                enabled = true,
                 isFocusedTransition = updateTransition(targetState = false, label = ""),
                 innerTextField = { Text(text = "Sarajevo") },
-                onUpClick = {},
-                onResetClick = {}
+                onUpButtonClick = {},
+                onResetButtonClick = {}
             )
         }
     }
@@ -101,11 +101,11 @@ private fun LocationSearcherDecorationBoxNonEmptyDisabledPreview() {
         Surface {
             LocationSearcherDecorationBox(
                 query = "Sarajevo",
-                isEnabled = false,
+                enabled = false,
                 isFocusedTransition = updateTransition(targetState = false, label = ""),
                 innerTextField = { Text(text = "Sarajevo") },
-                onUpClick = {},
-                onResetClick = {}
+                onUpButtonClick = {},
+                onResetButtonClick = {}
             )
         }
     }
@@ -126,11 +126,11 @@ private fun LocationSearcherDecorationBoxEmptyEnabledPreview() {
         Surface {
             LocationSearcherDecorationBox(
                 query = "",
-                isEnabled = true,
+                enabled = true,
                 isFocusedTransition = updateTransition(targetState = true, label = ""),
                 innerTextField = { Text(text = "") },
-                onUpClick = {},
-                onResetClick = {}
+                onUpButtonClick = {},
+                onResetButtonClick = {}
             )
         }
     }
@@ -151,11 +151,11 @@ private fun LocationSearcherDecorationBoxEmptyDisabledPreview() {
         Surface {
             LocationSearcherDecorationBox(
                 query = "",
-                isEnabled = false,
+                enabled = false,
                 isFocusedTransition = updateTransition(targetState = true, label = ""),
                 innerTextField = { Text(text = "") },
-                onUpClick = {},
-                onResetClick = {}
+                onUpButtonClick = {},
+                onResetButtonClick = {}
             )
         }
     }

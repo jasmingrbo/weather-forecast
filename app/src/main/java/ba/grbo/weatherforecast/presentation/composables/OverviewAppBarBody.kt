@@ -8,42 +8,58 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ba.grbo.weatherforecast.AppBarCallables.OverviewAppBarCallables
-import ba.grbo.weatherforecast.OverviewAppBarState
+import ba.grbo.weatherforecast.framework.data.Body
+import ba.grbo.weatherforecast.framework.data.CommonBodyEvent
+import ba.grbo.weatherforecast.framework.data.CommonBodyState
 import ba.grbo.weatherforecast.framework.mics.PreviewData
 import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalTransitionApi::class)
 @Composable
 fun OverviewAppBarBody(
-    state: OverviewAppBarState,
-    callables: OverviewAppBarCallables
+    state: CommonBodyState.AppBarState.Overview.OverviewAppBarState,
+    onEvent: (CommonBodyEvent) -> Unit
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         val transition = updateTransition(
-            targetState = state.isFocused,
+            targetState = state.focused,
             label = "OverviewAppBarBody-Transition"
         )
+
+        val focusManager = LocalFocusManager.current
+        val scope = rememberCoroutineScope()
+        if (state.unfocus) scope.launch {
+            delay(90) //375 the whole ripple animation
+            focusManager.clearFocus(true) // triggers onFocusChanged
+        }
+
         LocationSearcher(
             modifier = Modifier.weight(1f),
             query = state.query,
-            isEnabled = state.isEnabled,
-            isFocusedTransition = transition.createChildTransition { isFocused -> isFocused },
-            onQueryChange = callables.onQueryChange,
-            onFocusChanged = callables.onFocusChange,
-            onUpClick = callables.onUpClicked,
-            onResetClick = callables.onResetClicked
+            enabled = state.enabled,
+            hideKeyboard = state.hideKeyboard,
+            focusedTransition = transition.createChildTransition { focused -> focused },
+            onQueryChange = { query -> onEvent(CommonBodyEvent.OnQueryChange(query)) },
+            onFocusChanged = { focused -> onEvent(CommonBodyEvent.OnFocusChanged(focused)) },
+            onUpButtonClick = { onEvent(CommonBodyEvent.OnUpButtonClick(Body.OVERVIEW)) },
+            onResetButtonClick = { onEvent(CommonBodyEvent.OnResetButtonClick) },
+            onDoneImeActionPressed = { onEvent(CommonBodyEvent.OnDoneImeAction) },
+            onSoftwareKeyboardHidden = { onEvent(CommonBodyEvent.OnSoftwareKeyboardHidden) }
         )
         AnimatedOverflowButton(
             modifier = Modifier.padding(end = 2.dp),
-            isLocationSearcherFocusedTransition = transition.createChildTransition { isFocused ->
-                isFocused
+            locationSearcherFocusedTransition = transition.createChildTransition { focused ->
+                focused
             },
-            onClick = callables.onOverflowClicked
+            onClick = { onEvent(CommonBodyEvent.OnOverflowButtonClick) }
         )
     }
 }
@@ -63,7 +79,7 @@ private fun OverviewAppBarBodyNonEmptyUnfocusedEnabledPreview() {
         Surface {
             OverviewAppBarBody(
                 state = PreviewData.overviewAppBarStates.nonEmptyUnfocusedEnabled.value,
-                callables = PreviewData.overviewAppBarCallables
+                onEvent = {}
             )
         }
     }
@@ -84,7 +100,7 @@ private fun OverviewAppBarBodyNonEmptyUnfocusedDisabledPreview() {
         Surface {
             OverviewAppBarBody(
                 state = PreviewData.overviewAppBarStates.nonEmptyUnfocusedDisabled.value,
-                callables = PreviewData.overviewAppBarCallables
+                onEvent = {}
             )
         }
     }
@@ -105,7 +121,7 @@ private fun OverviewAppBarBodyEmptyFocusedEnabledPreview() {
         Surface {
             OverviewAppBarBody(
                 state = PreviewData.overviewAppBarStates.emptyFocusedEnabled.value,
-                callables = PreviewData.overviewAppBarCallables
+                onEvent = {}
             )
         }
     }
@@ -126,7 +142,7 @@ private fun OverviewAppBarBodyEmptyFocusedDisabledPreview() {
         Surface {
             OverviewAppBarBody(
                 state = PreviewData.overviewAppBarStates.emptyFocusedDisabled.value,
-                callables = PreviewData.overviewAppBarCallables
+                onEvent = {}
             )
         }
     }

@@ -11,12 +11,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
 @Composable
-fun Hint(isEnabled: Boolean) {
+fun Hint(enabled: Boolean) {
     Text(
         text = "Search for a place",
         style = LocalTextStyle.current.copy(
             color = MaterialTheme.colors.onSurface.copy(
-                if (isEnabled) ContentAlpha.medium else ContentAlpha.disabled
+                if (enabled) ContentAlpha.medium else ContentAlpha.disabled
             )
         )
     )
@@ -35,7 +35,7 @@ fun Hint(isEnabled: Boolean) {
 private fun HintPreviewEnabled() {
     WeatherForecastTheme {
         Surface {
-            Hint(isEnabled = true)
+            Hint(enabled = true)
         }
     }
 }
@@ -53,7 +53,7 @@ private fun HintPreviewEnabled() {
 private fun HintPreviewDisabled() {
     WeatherForecastTheme {
         Surface {
-            Hint(isEnabled = false)
+            Hint(enabled = false)
         }
     }
 }

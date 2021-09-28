@@ -15,14 +15,14 @@ import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 @Composable
 fun MagnifierIcon(
     modifier: Modifier = Modifier,
-    isEnabled: Boolean,
+    enabled: Boolean,
 ) {
     Icon(
         modifier = modifier,
         imageVector = Icons.Default.Search,
         contentDescription = "Search",
         tint = MaterialTheme.colors.onSurface.copy(
-            alpha = if (isEnabled) TextFieldDefaults.IconOpacity
+            alpha = if (enabled) TextFieldDefaults.IconOpacity
             else ContentAlpha.disabled
         )
     )
@@ -40,7 +40,7 @@ fun MagnifierIcon(
 @Composable
 private fun MagnifierIconEnabledPreview() {
     WeatherForecastTheme {
-        MagnifierIcon(isEnabled = true)
+        MagnifierIcon(enabled = true)
     }
 }
 
@@ -56,6 +56,6 @@ private fun MagnifierIconEnabledPreview() {
 @Composable
 private fun MagnifierIconDisabledPreview() {
     WeatherForecastTheme {
-        MagnifierIcon(isEnabled = false)
+        MagnifierIcon(enabled = false)
     }
 }
