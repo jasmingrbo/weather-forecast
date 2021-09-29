@@ -7,12 +7,15 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+import ba.grbo.weatherforecast.framework.mics.PreviewData
+import ba.grbo.weatherforecast.framework.mics.isEmpty
 import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun AnimatedHint(query: String, enabled: Boolean) {
+fun AnimatedHint(query: TextFieldValue, enabled: Boolean) {
     AnimatedVisibility(
         visible = query.isEmpty(),
         enter = fadeIn(),
@@ -36,7 +39,7 @@ private fun AnimatedHintNonEmptyEnabledPreview() {
     WeatherForecastTheme {
         Surface {
             AnimatedHint(
-                query = "Sarajevo",
+                query = PreviewData.Query.NonEmpty,
                 enabled = true
             )
         }
@@ -57,7 +60,7 @@ private fun AnimatedHintNonEmptyDisabledPreview() {
     WeatherForecastTheme {
         Surface {
             AnimatedHint(
-                query = "Sarajevo",
+                query = PreviewData.Query.NonEmpty,
                 enabled = false
             )
         }
@@ -78,7 +81,7 @@ private fun AnimatedHintEmptyEnabledPreview() {
     WeatherForecastTheme {
         Surface {
             AnimatedHint(
-                query = "",
+                query = PreviewData.Query.Empty,
                 enabled = true
             )
         }
@@ -99,7 +102,7 @@ private fun AnimatedHintEmptyDisabledPreview() {
     WeatherForecastTheme {
         Surface {
             AnimatedHint(
-                query = "",
+                query = PreviewData.Query.Empty,
                 enabled = false
             )
         }

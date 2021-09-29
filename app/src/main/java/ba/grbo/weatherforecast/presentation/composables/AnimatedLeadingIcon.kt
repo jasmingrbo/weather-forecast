@@ -26,11 +26,11 @@ import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AnimatedLeadingIcon(
-    isFocusedTransition: Transition<Boolean>,
+    locationSearcherFocusedTransition: Transition<Boolean>,
     enabled: Boolean,
     onClick: () -> Unit
 ) {
-    isFocusedTransition.AnimatedContent(
+    locationSearcherFocusedTransition.AnimatedContent(
         transitionSpec = { createLeadingIconTransitionSpec() },
         contentAlignment = Alignment.CenterStart
     ) { targetState ->
@@ -79,7 +79,7 @@ private fun AnimatedHintUnfocusedEnabledPreview() {
     WeatherForecastTheme {
         Surface {
             AnimatedLeadingIcon(
-                isFocusedTransition = updateTransition(targetState = false, label = ""),
+                locationSearcherFocusedTransition = updateTransition(targetState = false, label = ""),
                 enabled = true,
                 onClick = {}
             )
@@ -101,7 +101,7 @@ private fun AnimatedHintUnfocusedDisabledPreview() {
     WeatherForecastTheme {
         Surface {
             AnimatedLeadingIcon(
-                isFocusedTransition = updateTransition(targetState = false, label = ""),
+                locationSearcherFocusedTransition = updateTransition(targetState = false, label = ""),
                 enabled = false,
                 onClick = {}
             )
@@ -123,7 +123,7 @@ private fun AnimatedHintFocusedEnabledPreview() {
     WeatherForecastTheme {
         Surface {
             AnimatedLeadingIcon(
-                isFocusedTransition = updateTransition(targetState = true, label = ""),
+                locationSearcherFocusedTransition = updateTransition(targetState = true, label = ""),
                 enabled = true,
                 onClick = {}
             )
@@ -145,7 +145,7 @@ private fun AnimatedHintFocusedDisabledPreview() {
     WeatherForecastTheme {
         Surface {
             AnimatedLeadingIcon(
-                isFocusedTransition = updateTransition(targetState = true, label = ""),
+                locationSearcherFocusedTransition = updateTransition(targetState = true, label = ""),
                 enabled = false,
                 onClick = {}
             )

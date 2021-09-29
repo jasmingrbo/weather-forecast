@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
@@ -19,8 +19,6 @@ import ba.grbo.weatherforecast.framework.data.CommonBodyEvent
 import ba.grbo.weatherforecast.framework.data.CommonBodyState
 import ba.grbo.weatherforecast.framework.mics.PreviewData
 import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalTransitionApi::class)
 @Composable
@@ -35,11 +33,7 @@ fun OverviewAppBarBody(
         )
 
         val focusManager = LocalFocusManager.current
-        val scope = rememberCoroutineScope()
-        if (state.unfocus) scope.launch {
-            delay(90) //375 the whole ripple animation
-            focusManager.clearFocus(true) // triggers onFocusChanged
-        }
+        LaunchedEffect(key1 = state.unfocus) { if (state.unfocus) focusManager.clearFocus(true) }
 
         LocationSearcher(
             modifier = Modifier.weight(1f),
@@ -51,7 +45,7 @@ fun OverviewAppBarBody(
             onFocusChanged = { focused -> onEvent(CommonBodyEvent.OnFocusChanged(focused)) },
             onUpButtonClick = { onEvent(CommonBodyEvent.OnUpButtonClick(Body.OVERVIEW)) },
             onResetButtonClick = { onEvent(CommonBodyEvent.OnResetButtonClick) },
-            onDoneImeActionPressed = { onEvent(CommonBodyEvent.OnDoneImeAction) },
+            onDoneImeActionPressed = { onEvent(CommonBodyEvent.OnDoneImeActionPressed) },
             onSoftwareKeyboardHidden = { onEvent(CommonBodyEvent.OnSoftwareKeyboardHidden) }
         )
         AnimatedOverflowButton(
@@ -78,7 +72,7 @@ private fun OverviewAppBarBodyNonEmptyUnfocusedEnabledPreview() {
     WeatherForecastTheme {
         Surface {
             OverviewAppBarBody(
-                state = PreviewData.overviewAppBarStates.nonEmptyUnfocusedEnabled.value,
+                state = PreviewData.OverviewAppBarState.NonEmptyUnfocusedEnabled.value,
                 onEvent = {}
             )
         }
@@ -99,7 +93,7 @@ private fun OverviewAppBarBodyNonEmptyUnfocusedDisabledPreview() {
     WeatherForecastTheme {
         Surface {
             OverviewAppBarBody(
-                state = PreviewData.overviewAppBarStates.nonEmptyUnfocusedDisabled.value,
+                state = PreviewData.OverviewAppBarState.NonEmptyUnfocusedDisabled.value,
                 onEvent = {}
             )
         }
@@ -120,7 +114,7 @@ private fun OverviewAppBarBodyEmptyFocusedEnabledPreview() {
     WeatherForecastTheme {
         Surface {
             OverviewAppBarBody(
-                state = PreviewData.overviewAppBarStates.emptyFocusedEnabled.value,
+                state = PreviewData.OverviewAppBarState.EmptyFocusedEnabled.value,
                 onEvent = {}
             )
         }
@@ -141,7 +135,7 @@ private fun OverviewAppBarBodyEmptyFocusedDisabledPreview() {
     WeatherForecastTheme {
         Surface {
             OverviewAppBarBody(
-                state = PreviewData.overviewAppBarStates.emptyFocusedDisabled.value,
+                state = PreviewData.OverviewAppBarState.EmptyFocusedDisabled.value,
                 onEvent = {}
             )
         }

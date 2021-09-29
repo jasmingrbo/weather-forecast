@@ -1,64 +1,88 @@
 package ba.grbo.weatherforecast.framework.data
 
+import androidx.compose.ui.text.input.TextFieldValue
+import ba.grbo.core.domain.Constants
+import ba.grbo.weatherforecast.framework.data.CommonBodyState.AppBarState.Overview.OverviewAppBarState
+import ba.grbo.weatherforecast.framework.mics.Default
+import ba.grbo.weatherforecast.framework.mics.EMPTY
+import ba.grbo.weatherforecast.framework.mics.WHITESPACE
+import ba.grbo.weatherforecast.framework.mics.updateText
+
 data class CommonBodyState(
     val appBarState: AppBarState,
     val internetAvailabilityBannerState: InternetAvailabilityBannerState
 ) {
-    fun updateQuery(query: String) = copy(
-        appBarState = (appBarState as AppBarState.Overview).copy(
-            value = appBarState.value.copy(query = query)
-        )
-    )
+    fun updateQuery(query: TextFieldValue) = updateAppBarState { it.updateQuery(query) }
 
-    fun updateFocusedToTrue() = copy(
-        appBarState = (appBarState as AppBarState.Overview).copy(
-            value = appBarState.value.copy(focused = true)
-        )
-    )
+    fun resetQuery() = updateAppBarState { it.resetQuery() }
 
-    fun updateEnabled(enabled: Boolean) = copy(
-        appBarState = (appBarState as AppBarState.Overview).copy(
-            value = appBarState.value.copy(enabled = enabled)
-        )
-    )
+    fun updateFocusedToTrue() = updateAppBarState { it.updateFocused(true) }
 
-    fun updateUnfocusToTrue() = copy(
-        appBarState = (appBarState as AppBarState.Overview).copy(
-            value = appBarState.value.copy(unfocus = true)
-        )
-    )
+    fun updateEnabled(enabled: Boolean) = updateAppBarState { it.updateEnabled(enabled) }
 
-    fun updateHideKeyboardToTrue() = updateHideKeyboard(true)
+    fun updateHideKeyboardToTrue() = updateAppBarState { it.updateHideKeyboard(true) }
 
-    fun updateHideKeyboardToFalse() = updateHideKeyboard(false)
+    fun updateHideKeyboardToFalse() = updateAppBarState { it.updateHideKeyboard(false) }
 
-    fun updateFocusedAndUnfocusToFalse() = copy(
-        appBarState = (appBarState as AppBarState.Overview).copy(
-            value = appBarState.value.copy(
-                focused = false,
-                unfocus = false,
-            )
-        )
-    )
+    fun updateUnfocusToTrueAndResetQuery() = updateAppBarState {
+        it.updateUnfocusToTrueAndResetQuery()
+    }
 
-    private fun updateHideKeyboard(hideKeyboard: Boolean) = copy(
-        appBarState = (appBarState as AppBarState.Overview).copy(
-            value = appBarState.value.copy(hideKeyboard = hideKeyboard)
+    fun updateFocusedAndUnfocusToFalse() = updateAppBarState { it.updateFocusedAndUnfocusToFalse() }
+
+    private fun updateAppBarState(action: (OverviewAppBarState) -> OverviewAppBarState) = copy(
+        appBarState = AppBarState.Overview(
+            value = action((appBarState as AppBarState.Overview).value)
         )
     )
 
     sealed class AppBarState {
         data class Overview(val value: OverviewAppBarState) : AppBarState() {
             data class OverviewAppBarState(
-                val query: String,
+                val query: TextFieldValue,
                 val focused: Boolean,
                 val enabled: Boolean,
                 val unfocus: Boolean,
                 val hideKeyboard: Boolean
             ) {
+                fun updateQuery(query: TextFieldValue) = copy(
+                    query = query.updateText(onQueryChange(query.text))
+                )
+
+                fun resetQuery() = copy(query = TextFieldValue.Default)
+
+                fun updateFocused(focused: Boolean) = copy(focused = focused)
+
+                fun updateEnabled(enabled: Boolean) = copy(enabled = enabled)
+
+                fun updateHideKeyboard(hideKeyboard: Boolean) = copy(hideKeyboard = hideKeyboard)
+
+                fun updateUnfocusToTrueAndResetQuery() = copy(
+                    unfocus = true, query = TextFieldValue.Default
+                )
+
+                fun updateFocusedAndUnfocusToFalse() = copy(focused = false, unfocus = false)
+
+                private fun onQueryChange(query: String) = when {
+                    query.isBlank() -> String.EMPTY
+                    else -> removeWhitespace(
+                        if (query.length <= Constants.LOCATION_SEARCHER_LENGTH_LIMIT) query
+                        else query.substring(0, Constants.LOCATION_SEARCHER_LENGTH_LIMIT)
+                    )
+                }
+
+                private fun removeWhitespace(input: String): String {
+                    val trimmed = input.trim()
+                        .split(Char.WHITESPACE)
+                        .filter { it.isNotEmpty() }
+                        .joinToString(String.WHITESPACE)
+
+                    return if (input.last() == Char.WHITESPACE) "$trimmed " else trimmed
+                }
+
                 companion object {
                     val Default = OverviewAppBarState(
-                        query = "",
+                        query = TextFieldValue.Default,
                         focused = false,
                         enabled = true,
                         unfocus = false,
@@ -95,4 +119,3 @@ data class CommonBodyState(
         )
     }
 }
-

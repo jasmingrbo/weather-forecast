@@ -1,58 +1,53 @@
 package ba.grbo.weatherforecast.framework.mics
 
+import androidx.compose.ui.text.input.TextFieldValue
 import ba.grbo.weatherforecast.framework.data.CommonBodyState
-import ba.grbo.weatherforecast.framework.mics.Previewable.OverviewAppBarStates
 
-interface Previewable {
-    val overviewAppBarStates: OverviewAppBarStates
+object PreviewData {
+    private const val QUERY = "Sarajevo"
 
-    data class OverviewAppBarStates(
-        val nonEmptyUnfocusedEnabled: CommonBodyState.AppBarState.Overview,
-        val nonEmptyUnfocusedDisabled: CommonBodyState.AppBarState.Overview,
-        val emptyFocusedEnabled: CommonBodyState.AppBarState.Overview,
-        val emptyFocusedDisabled: CommonBodyState.AppBarState.Overview,
-    )
-}
-
-val PreviewData: Previewable by lazy {
-    object : Previewable {
-        override val overviewAppBarStates = OverviewAppBarStates(
-            nonEmptyUnfocusedEnabled = CommonBodyState.AppBarState.Overview(
-                value = CommonBodyState.AppBarState.Overview.OverviewAppBarState(
-                    query = "Sarajevo",
-                    focused = false,
-                    enabled = true,
-                    unfocus = false,
-                    hideKeyboard = false
-                )
-            ),
-            nonEmptyUnfocusedDisabled =  CommonBodyState.AppBarState.Overview(
-                value = CommonBodyState.AppBarState.Overview.OverviewAppBarState(
-                    query = "Sarajevo",
-                    focused = false,
-                    enabled = false,
-                    unfocus = false,
-                    hideKeyboard = false
-                )
-            ),
-            emptyFocusedEnabled =  CommonBodyState.AppBarState.Overview(
-                value = CommonBodyState.AppBarState.Overview.OverviewAppBarState(
-                    query = "",
-                    focused = true,
-                    enabled = true,
-                    unfocus = false,
-                    hideKeyboard = false
-                )
-            ),
-            emptyFocusedDisabled =  CommonBodyState.AppBarState.Overview(
-                value = CommonBodyState.AppBarState.Overview.OverviewAppBarState(
-                    query = "",
-                    focused = true,
-                    enabled = false,
-                    unfocus = false,
-                    hideKeyboard = false
-                )
-            ),
+    object OverviewAppBarState {
+        val NonEmptyUnfocusedEnabled = CommonBodyState.AppBarState.Overview(
+            value = CommonBodyState.AppBarState.Overview.OverviewAppBarState(
+                query = Query.NonEmpty,
+                focused = false,
+                enabled = true,
+                unfocus = false,
+                hideKeyboard = false
+            )
         )
+
+        val NonEmptyUnfocusedDisabled = CommonBodyState.AppBarState.Overview(
+            value = CommonBodyState.AppBarState.Overview.OverviewAppBarState(
+                query = Query.NonEmpty,
+                focused = false,
+                enabled = false,
+                unfocus = false,
+                hideKeyboard = false
+            )
+        )
+        val EmptyFocusedEnabled = CommonBodyState.AppBarState.Overview(
+            value = CommonBodyState.AppBarState.Overview.OverviewAppBarState(
+                query = Query.Empty,
+                focused = true,
+                enabled = true,
+                unfocus = false,
+                hideKeyboard = false
+            )
+        )
+        val EmptyFocusedDisabled = CommonBodyState.AppBarState.Overview(
+            value = CommonBodyState.AppBarState.Overview.OverviewAppBarState(
+                query = Query.Empty,
+                focused = true,
+                enabled = false,
+                unfocus = false,
+                hideKeyboard = false
+            )
+        )
+    }
+
+    object Query {
+        val NonEmpty = TextFieldValue(text = QUERY)
+        val Empty = TextFieldValue(text = String.EMPTY)
     }
 }

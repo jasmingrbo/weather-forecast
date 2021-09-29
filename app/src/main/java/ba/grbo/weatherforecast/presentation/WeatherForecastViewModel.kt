@@ -9,7 +9,7 @@ import ba.grbo.weatherforecast.framework.data.Body.DETAILS
 import ba.grbo.weatherforecast.framework.data.Body.OVERVIEW
 import ba.grbo.weatherforecast.framework.data.Body.SETTINGS
 import ba.grbo.weatherforecast.framework.data.CommonBodyEvent
-import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnDoneImeAction
+import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnDoneImeActionPressed
 import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnEnabledChanged
 import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnFocusChanged
 import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnOverflowButtonClick
@@ -37,17 +37,22 @@ class WeatherForecastViewModel @Inject constructor() : ViewModel() {
             }
             is OnEnabledChanged -> state = state.updateEnabled(event.enabled)
             is OnUpButtonClick -> when (event.body) {
-                OVERVIEW -> state = state.updateUnfocusToTrue()
+                OVERVIEW -> {
+                    viewModelScope.launch {
+                        delay(90) // 375 the whole ripple animation
+                        state = state.updateUnfocusToTrueAndResetQuery()
+                    }
+                }
                 DETAILS -> {}
                 SETTINGS -> {}
             }
             is OnResetButtonClick -> viewModelScope.launch {
                 delay(90)
-                state = state.updateQuery("")
+                state = state.resetQuery()
             }
             is OnOverflowButtonClick -> {
             }
-            is OnDoneImeAction -> state = state.updateHideKeyboardToTrue()
+            is OnDoneImeActionPressed -> state = state.updateHideKeyboardToTrue()
             is OnSoftwareKeyboardHidden -> state = state.updateHideKeyboardToFalse()
         }
     }

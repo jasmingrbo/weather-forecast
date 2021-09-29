@@ -16,16 +16,18 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ba.grbo.weatherforecast.framework.mics.PreviewData
 import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun LocationSearcherDecorationBox(
-    query: String,
+    query: TextFieldValue,
     enabled: Boolean,
-    isFocusedTransition: Transition<Boolean>,
+    focusedTransition: Transition<Boolean>,
     innerTextField: @Composable () -> Unit,
     onUpButtonClick: () -> Unit,
     onResetButtonClick: () -> Unit
@@ -42,7 +44,7 @@ fun LocationSearcherDecorationBox(
         verticalAlignment = Alignment.CenterVertically
     ) {
         AnimatedLeadingIcon(
-            isFocusedTransition = isFocusedTransition,
+            locationSearcherFocusedTransition = focusedTransition,
             enabled = enabled,
             onClick = onUpButtonClick
         )
@@ -75,10 +77,10 @@ private fun LocationSearcherDecorationBoxNonEmptyEnabledPreview() {
     WeatherForecastTheme {
         Surface {
             LocationSearcherDecorationBox(
-                query = "Sarajevo",
+                query = PreviewData.Query.NonEmpty,
                 enabled = true,
-                isFocusedTransition = updateTransition(targetState = false, label = ""),
-                innerTextField = { Text(text = "Sarajevo") },
+                focusedTransition = updateTransition(targetState = false, label = ""),
+                innerTextField = { Text(text = PreviewData.Query.NonEmpty.text) },
                 onUpButtonClick = {},
                 onResetButtonClick = {}
             )
@@ -100,10 +102,10 @@ private fun LocationSearcherDecorationBoxNonEmptyDisabledPreview() {
     WeatherForecastTheme {
         Surface {
             LocationSearcherDecorationBox(
-                query = "Sarajevo",
+                query = PreviewData.Query.NonEmpty,
                 enabled = false,
-                isFocusedTransition = updateTransition(targetState = false, label = ""),
-                innerTextField = { Text(text = "Sarajevo") },
+                focusedTransition = updateTransition(targetState = false, label = ""),
+                innerTextField = { Text(text = PreviewData.Query.NonEmpty.text) },
                 onUpButtonClick = {},
                 onResetButtonClick = {}
             )
@@ -125,10 +127,10 @@ private fun LocationSearcherDecorationBoxEmptyEnabledPreview() {
     WeatherForecastTheme {
         Surface {
             LocationSearcherDecorationBox(
-                query = "",
+                query = PreviewData.Query.Empty,
                 enabled = true,
-                isFocusedTransition = updateTransition(targetState = true, label = ""),
-                innerTextField = { Text(text = "") },
+                focusedTransition = updateTransition(targetState = true, label = ""),
+                innerTextField = { Text(text = PreviewData.Query.Empty.text) },
                 onUpButtonClick = {},
                 onResetButtonClick = {}
             )
@@ -150,10 +152,10 @@ private fun LocationSearcherDecorationBoxEmptyDisabledPreview() {
     WeatherForecastTheme {
         Surface {
             LocationSearcherDecorationBox(
-                query = "",
+                query = PreviewData.Query.Empty,
                 enabled = false,
-                isFocusedTransition = updateTransition(targetState = true, label = ""),
-                innerTextField = { Text(text = "") },
+                focusedTransition = updateTransition(targetState = true, label = ""),
+                innerTextField = { Text(text = PreviewData.Query.Empty.text) },
                 onUpButtonClick = {},
                 onResetButtonClick = {}
             )

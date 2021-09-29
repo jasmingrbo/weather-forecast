@@ -26,20 +26,23 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import ba.grbo.weatherforecast.framework.mics.EMPTY
+import ba.grbo.weatherforecast.framework.mics.PreviewData
 import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LocationSearcher(
     modifier: Modifier = Modifier,
-    query: String,
+    query: TextFieldValue,
     enabled: Boolean,
     hideKeyboard: Boolean,
     focusedTransition: Transition<Boolean>,
-    onQueryChange: (String) -> Unit,
+    onQueryChange: (TextFieldValue) -> Unit,
     onFocusChanged: (Boolean) -> Unit,
     onUpButtonClick: () -> Unit,
     onResetButtonClick: () -> Unit,
@@ -47,7 +50,7 @@ fun LocationSearcher(
     onSoftwareKeyboardHidden: () -> Unit
 ) {
     val endPadding by createHorizontalPadding(
-        isFocusedTransition = focusedTransition,
+        focusedTransition = focusedTransition,
         focusedPadding = 12.dp,
         unfocusedPadding = 2.dp
     )
@@ -78,7 +81,7 @@ fun LocationSearcher(
             LocationSearcherDecorationBox(
                 query = query,
                 enabled = enabled,
-                isFocusedTransition = focusedTransition,
+                focusedTransition = focusedTransition,
                 innerTextField = innerTextField,
                 onUpButtonClick = onUpButtonClick,
                 onResetButtonClick = onResetButtonClick
@@ -89,10 +92,10 @@ fun LocationSearcher(
 
 @Composable
 private fun createHorizontalPadding(
-    isFocusedTransition: Transition<Boolean>,
+    focusedTransition: Transition<Boolean>,
     focusedPadding: Dp,
     unfocusedPadding: Dp
-) = isFocusedTransition.animateDp(
+) = focusedTransition.animateDp(
     transitionSpec = {
         tween(
             durationMillis = if (targetState) 200 else AnimationConstants.DefaultDurationMillis,
@@ -116,10 +119,10 @@ private fun LocationSearcherNonEmptyUnfocusedEnabledPreview() {
     WeatherForecastTheme {
         Surface {
             LocationSearcher(
-                query = "Sarajevo",
+                query = PreviewData.Query.NonEmpty,
                 enabled = true,
                 hideKeyboard = false,
-                focusedTransition = updateTransition(targetState = false, label = ""),
+                focusedTransition = updateTransition(targetState = false, label = String.EMPTY),
                 onQueryChange = {},
                 onFocusChanged = {},
                 onUpButtonClick = {},
@@ -145,10 +148,10 @@ private fun LocationSearcherNonEmptyUnfocusedDisabledPreview() {
     WeatherForecastTheme {
         Surface {
             LocationSearcher(
-                query = "Sarajevo",
+                query = PreviewData.Query.NonEmpty,
                 enabled = false,
                 hideKeyboard = false,
-                focusedTransition = updateTransition(targetState = false, label = ""),
+                focusedTransition = updateTransition(targetState = false, label = String.EMPTY),
                 onQueryChange = {},
                 onFocusChanged = {},
                 onUpButtonClick = {},
@@ -174,10 +177,10 @@ private fun LocationSearcherEmptyFocusedEnabledPreview() {
     WeatherForecastTheme {
         Surface {
             LocationSearcher(
-                query = "",
+                query = PreviewData.Query.Empty,
                 enabled = true,
                 hideKeyboard = false,
-                focusedTransition = updateTransition(targetState = true, label = ""),
+                focusedTransition = updateTransition(targetState = true, label = String.EMPTY),
                 onQueryChange = {},
                 onFocusChanged = {},
                 onUpButtonClick = {},
@@ -203,10 +206,10 @@ private fun LocationSearcherEmptyFocusedDisabledPreview() {
     WeatherForecastTheme {
         Surface {
             LocationSearcher(
-                query = "",
+                query = PreviewData.Query.Empty,
                 enabled = false,
                 hideKeyboard = false,
-                focusedTransition = updateTransition(targetState = true, label = ""),
+                focusedTransition = updateTransition(targetState = true, label = String.EMPTY),
                 onQueryChange = {},
                 onFocusChanged = {},
                 onUpButtonClick = {},

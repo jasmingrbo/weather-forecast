@@ -7,14 +7,17 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+import ba.grbo.weatherforecast.framework.mics.PreviewData
+import ba.grbo.weatherforecast.framework.mics.isNotEmpty
 import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AnimatedResetButton(
     modifier: Modifier = Modifier,
-    query: String,
+    query: TextFieldValue,
     enabled: Boolean,
     onClick: () -> Unit
 ) {
@@ -44,7 +47,7 @@ fun AnimatedResetButton(
 private fun AnimatedResetButtonNonEmptyEnabledPreview() {
     WeatherForecastTheme {
         AnimatedResetButton(
-            query = "Sarajevo",
+            query = PreviewData.Query.NonEmpty,
             enabled = true,
             onClick = {}
         )
@@ -64,7 +67,7 @@ private fun AnimatedResetButtonNonEmptyEnabledPreview() {
 private fun AnimatedResetButtonNonEmptyDisabledPreview() {
     WeatherForecastTheme {
         AnimatedResetButton(
-            query = "Sarajevo",
+            query = PreviewData.Query.NonEmpty,
             enabled = false,
             onClick = {}
         )
@@ -84,7 +87,7 @@ private fun AnimatedResetButtonNonEmptyDisabledPreview() {
 private fun AnimatedResetButtonEmptyEnabledPreview() {
     WeatherForecastTheme {
         AnimatedResetButton(
-            query = "",
+            query = PreviewData.Query.Empty,
             enabled = true,
             onClick = {}
         )
@@ -104,7 +107,7 @@ private fun AnimatedResetButtonEmptyEnabledPreview() {
 private fun AnimatedResetButtonEmptyDisabledPreview() {
     WeatherForecastTheme {
         AnimatedResetButton(
-            query = "",
+            query = PreviewData.Query.Empty,
             enabled = false,
             onClick = {}
         )

@@ -38,7 +38,7 @@ private fun OverviewAppBarNonEmptyUnfocusedEnabledPreview() {
     WeatherForecastTheme {
         Surface {
             AppBar(
-                state = PreviewData.overviewAppBarStates.nonEmptyUnfocusedEnabled,
+                state = PreviewData.OverviewAppBarState.NonEmptyUnfocusedEnabled,
                 onEvent = {}
             )
         }
@@ -59,7 +59,7 @@ private fun OverviewAppBarNonEmptyUnfocusedDisabledPreview() {
     WeatherForecastTheme {
         Surface {
             AppBar(
-                state = PreviewData.overviewAppBarStates.nonEmptyUnfocusedDisabled,
+                state = PreviewData.OverviewAppBarState.NonEmptyUnfocusedDisabled,
                 onEvent = {}
             )
         }
@@ -80,7 +80,7 @@ private fun OverviewAppBarEmptyFocusedEnabledPreview() {
     WeatherForecastTheme {
         Surface {
             AppBar(
-                state = PreviewData.overviewAppBarStates.emptyFocusedEnabled,
+                state = PreviewData.OverviewAppBarState.EmptyFocusedEnabled,
                 onEvent = {}
             )
         }
@@ -101,7 +101,7 @@ private fun OverviewAppBarEmptyFocusedDisabledPreview() {
     WeatherForecastTheme {
         Surface {
             AppBar(
-                state = PreviewData.overviewAppBarStates.emptyFocusedDisabled,
+                state = PreviewData.OverviewAppBarState.EmptyFocusedDisabled,
                 onEvent = {}
             )
         }
