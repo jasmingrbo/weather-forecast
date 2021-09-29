@@ -6,6 +6,7 @@ import ba.grbo.weatherforecast.framework.data.CommonBodyState.AppBarState.Overvi
 import ba.grbo.weatherforecast.framework.mics.Default
 import ba.grbo.weatherforecast.framework.mics.EMPTY
 import ba.grbo.weatherforecast.framework.mics.WHITESPACE
+import ba.grbo.weatherforecast.framework.mics.removeLastChar
 import ba.grbo.weatherforecast.framework.mics.updateText
 
 data class CommonBodyState(
@@ -13,8 +14,6 @@ data class CommonBodyState(
     val internetAvailabilityBannerState: InternetAvailabilityBannerState
 ) {
     fun updateQuery(query: TextFieldValue) = updateAppBarState { it.updateQuery(query) }
-
-    fun resetQuery() = updateAppBarState { it.resetQuery() }
 
     fun updateFocusedToTrue() = updateAppBarState { it.updateFocused(true) }
 
@@ -49,8 +48,6 @@ data class CommonBodyState(
                     query = query.updateText(onQueryChange(query.text))
                 )
 
-                fun resetQuery() = copy(query = TextFieldValue.Default)
-
                 fun updateFocused(focused: Boolean) = copy(focused = focused)
 
                 fun updateEnabled(enabled: Boolean) = copy(enabled = enabled)
@@ -58,7 +55,7 @@ data class CommonBodyState(
                 fun updateHideKeyboard(hideKeyboard: Boolean) = copy(hideKeyboard = hideKeyboard)
 
                 fun updateUnfocusToTrueAndResetQuery() = copy(
-                    unfocus = true, query = TextFieldValue.Default
+                    unfocus = true, query = query.copy(text = query.text.removeLastChar())
                 )
 
                 fun updateFocusedAndUnfocusToFalse() = copy(focused = false, unfocus = false)

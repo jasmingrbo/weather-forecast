@@ -3,13 +3,13 @@ package ba.grbo.weatherforecast.presentation.composables
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import ba.grbo.weatherforecast.framework.mics.PreviewData
+import ba.grbo.weatherforecast.framework.mics.customFadeIn
+import ba.grbo.weatherforecast.framework.mics.customFadeOut
 import ba.grbo.weatherforecast.framework.mics.isEmpty
 import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
@@ -18,8 +18,8 @@ import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 fun AnimatedHint(query: TextFieldValue, enabled: Boolean) {
     AnimatedVisibility(
         visible = query.isEmpty(),
-        enter = fadeIn(),
-        exit = fadeOut()
+        enter = customFadeIn(150), // total has to be 300, 150 + 150 (resetQuery animation)
+        exit = customFadeOut()
     ) {
         Hint(enabled = enabled)
     }

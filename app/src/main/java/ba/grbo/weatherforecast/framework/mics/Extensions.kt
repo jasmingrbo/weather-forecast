@@ -21,3 +21,4 @@ fun TextFieldValue.updateText(text: String) = copy(text = text)
 val TextFieldValue.Companion.Default: TextFieldValue
     get() = TextFieldValue()
 
+fun String.removeLastChar() = if (this.isEmpty()) this else substring(0 until this.lastIndex)
