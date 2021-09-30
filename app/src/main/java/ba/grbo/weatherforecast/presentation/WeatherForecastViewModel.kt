@@ -5,91 +5,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ba.grbo.weatherforecast.framework.data.Body.DETAILS
-import ba.grbo.weatherforecast.framework.data.Body.OVERVIEW
-import ba.grbo.weatherforecast.framework.data.Body.SETTINGS
 import ba.grbo.weatherforecast.framework.data.CommonBodyEvent
-import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnDoneImeActionPressed
-import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnEnabledChanged
-import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnFocusChanged
-import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnOverflowButtonClick
-import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnQueryChange
-import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnResetButtonClick
-import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnSoftwareKeyboardHidden
-import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnUpButtonClick
+import ba.grbo.weatherforecast.framework.data.CommonBodyEventHandler
 import ba.grbo.weatherforecast.framework.data.CommonBodyState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
-import kotlin.math.roundToLong
 
+@ExperimentalCoroutinesApi
 @HiltViewModel
 class WeatherForecastViewModel @Inject constructor() : ViewModel() {
     var state by mutableStateOf(CommonBodyState.Default)
         private set
 
-    private var resetQueryJob: Job? = null
-
-    fun onEvent(event: CommonBodyEvent) {
-        when (event) {
-            is OnQueryChange -> {
-                resetQueryJob?.cancel()
-                state = state.updateQuery(event.query)
-            }
-            is OnFocusChanged -> {
-                state = if (event.focused) {
-                    resetQueryJob?.cancel()
-                    state.updateFocusedToTrue()
-                } else state.updateFocusedAndUnfocusToFalse()
-            }
-            is OnEnabledChanged -> state = state.updateEnabled(event.enabled)
-            is OnUpButtonClick -> when (event.body) {
-                OVERVIEW -> {
-                    resetQueryJob = viewModelScope.launch {
-                        delay(90) // 375 the whole ripple animation
-                        state = state.updateUnfocusToTrue()
-                        resetQuery()
-                    }
-                }
-                DETAILS -> {
-                }
-                SETTINGS -> {
-                }
-            }
-            is OnResetButtonClick -> {
-                resetQueryJob = viewModelScope.launch {
-                    delay(90)
-                    resetQuery()
-                }
-            }
-            is OnOverflowButtonClick -> {
-            }
-            is OnDoneImeActionPressed -> state = state.updateHideKeyboardToTrue()
-            is OnSoftwareKeyboardHidden -> state = state.updateHideKeyboardToFalse()
-        }
-    }
-
-    private suspend fun resetQuery(duration: Double = 150.0) {
-        val query = (state.appBarState as CommonBodyState.AppBarState.Overview).value.query
-        if (query.isEmpty()) return
-
-        val delayDuration = (duration / query.length).roundToLong()
-
-        suspend fun updateQuery(query: String) {
-            if (query.isEmpty()) state = state.updateQuery(query)
-            else {
-                val temp = query.substring(0 until query.lastIndex)
-                state = state.updateQuery(temp)
-                delay(delayDuration)
-                // Don't have to check for coroutineContext.isActive, because we are calling
-                // delay, which is a library function, and all library functions are cancellable
-                // by default, that is they check whether or not a job is in active state
-                updateQuery(temp)
-            }
-        }
-
-        updateQuery(query)
-    }
+    fun onEvent(event: CommonBodyEvent) = CommonBodyEventHandler(event, state)
+        .onEach { state -> this.state = state }
+        .launchIn(viewModelScope)
 }

@@ -15,9 +15,9 @@ data class CommonBodyState(
 
     fun updateEnabled(enabled: Boolean) = updateAppBarState { it.updateEnabled(enabled) }
 
-    fun updateHideKeyboardToTrue() = updateAppBarState { it.updateHideKeyboard(true) }
-
-    fun updateHideKeyboardToFalse() = updateAppBarState { it.updateHideKeyboard(false) }
+    fun updateHideKeyboard(hideKeyboard: Boolean) = updateAppBarState {
+        it.updateHideKeyboard(hideKeyboard)
+    }
 
     fun updateUnfocusToTrue() = updateAppBarState {
         it.updateUnfocusToTrue()
@@ -48,7 +48,11 @@ data class CommonBodyState(
 
                 fun updateHideKeyboard(hideKeyboard: Boolean) = copy(hideKeyboard = hideKeyboard)
 
-                fun updateUnfocusToTrue() = copy(unfocus = true)
+                // Checking if focused to effectively disable multiple taps on UpButton, while
+                // it's being slided and faded out, otherwise it will set unfocus to true, even
+                // though the LocationSearcher is already unfocused, which will prevent from
+                // unfocusing it when it gets the focus next time
+                fun updateUnfocusToTrue() = if (focused) copy(unfocus = true) else this
 
                 fun updateFocusedAndUnfocusToFalse() = copy(focused = false, unfocus = false)
 
