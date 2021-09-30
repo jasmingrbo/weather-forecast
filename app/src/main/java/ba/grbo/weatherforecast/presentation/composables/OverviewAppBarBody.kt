@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -30,7 +31,9 @@ fun OverviewAppBarBody(
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         if (state.unfocus) unfocusLocationSearcher()
-        if (state.hideKeyboard) hideKeyboard(onEvent)
+        if (state.hideKeyboard) hideKeyboard(
+            onKeyboardHidden = { onEvent(CommonBodyEvent.OnSoftwareKeyboardHidden) }
+        )
         val transition = updateTransition(
             targetState = state.focused,
             label = "OverviewAppBarBody-Transition"
@@ -59,14 +62,20 @@ fun OverviewAppBarBody(
 
 @SuppressLint("ComposableNaming")
 @Composable
-private fun unfocusLocationSearcher() = LocalFocusManager.current.clearFocus(true)
+private fun unfocusLocationSearcher() {
+    val focusManager = LocalFocusManager.current
+    SideEffect { focusManager.clearFocus(true) }
+}
 
 @SuppressLint("ComposableNaming")
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-private fun hideKeyboard(onEvent: (CommonBodyEvent) -> Unit) {
-    LocalSoftwareKeyboardController.current?.hide()
-    onEvent(CommonBodyEvent.OnSoftwareKeyboardHidden)
+private fun hideKeyboard(onKeyboardHidden: () -> Unit) {
+    val keyBoardController = LocalSoftwareKeyboardController.current
+    SideEffect {
+        keyBoardController?.hide()
+        onKeyboardHidden()
+    }
 }
 
 @Preview(
