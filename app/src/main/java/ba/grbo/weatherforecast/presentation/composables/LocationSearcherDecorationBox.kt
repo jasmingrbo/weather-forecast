@@ -16,7 +16,6 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ba.grbo.weatherforecast.framework.mics.PreviewData
@@ -25,7 +24,7 @@ import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun LocationSearcherDecorationBox(
-    query: TextFieldValue,
+    query: String,
     enabled: Boolean,
     focusedTransition: Transition<Boolean>,
     innerTextField: @Composable () -> Unit,
@@ -50,13 +49,13 @@ fun LocationSearcherDecorationBox(
         )
         InnerTextField(
             modifier = Modifier.weight(1f),
-            query = query,
+            hintVisible = query.isEmpty(),
             enabled = enabled,
             innerTextField = innerTextField
         )
         AnimatedResetButton(
             modifier = Modifier.padding(start = 4.dp, end = 0.dp),
-            query = query,
+            visible = query.isNotEmpty(),
             enabled = enabled,
             onClick = onResetButtonClick
         )
@@ -80,7 +79,7 @@ private fun LocationSearcherDecorationBoxNonEmptyEnabledPreview() {
                 query = PreviewData.Query.NonEmpty,
                 enabled = true,
                 focusedTransition = updateTransition(targetState = false, label = ""),
-                innerTextField = { Text(text = PreviewData.Query.NonEmpty.text) },
+                innerTextField = { Text(text = PreviewData.Query.NonEmpty) },
                 onUpButtonClick = {},
                 onResetButtonClick = {}
             )
@@ -105,7 +104,7 @@ private fun LocationSearcherDecorationBoxNonEmptyDisabledPreview() {
                 query = PreviewData.Query.NonEmpty,
                 enabled = false,
                 focusedTransition = updateTransition(targetState = false, label = ""),
-                innerTextField = { Text(text = PreviewData.Query.NonEmpty.text) },
+                innerTextField = { Text(text = PreviewData.Query.NonEmpty) },
                 onUpButtonClick = {},
                 onResetButtonClick = {}
             )
@@ -130,7 +129,7 @@ private fun LocationSearcherDecorationBoxEmptyEnabledPreview() {
                 query = PreviewData.Query.Empty,
                 enabled = true,
                 focusedTransition = updateTransition(targetState = true, label = ""),
-                innerTextField = { Text(text = PreviewData.Query.Empty.text) },
+                innerTextField = { Text(text = PreviewData.Query.Empty) },
                 onUpButtonClick = {},
                 onResetButtonClick = {}
             )
@@ -155,7 +154,7 @@ private fun LocationSearcherDecorationBoxEmptyDisabledPreview() {
                 query = PreviewData.Query.Empty,
                 enabled = false,
                 focusedTransition = updateTransition(targetState = true, label = ""),
-                innerTextField = { Text(text = PreviewData.Query.Empty.text) },
+                innerTextField = { Text(text = PreviewData.Query.Empty) },
                 onUpButtonClick = {},
                 onResetButtonClick = {}
             )

@@ -9,7 +9,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import ba.grbo.weatherforecast.framework.mics.PreviewData
 import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
@@ -18,7 +17,7 @@ import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 @Composable
 fun InnerTextField(
     modifier: Modifier = Modifier,
-    query: TextFieldValue,
+    hintVisible: Boolean,
     enabled: Boolean,
     innerTextField: @Composable () -> Unit
 ) {
@@ -27,7 +26,7 @@ fun InnerTextField(
         contentAlignment = Alignment.CenterStart
     ) {
         innerTextField()
-        AnimatedHint(query = query, enabled = enabled)
+        AnimatedHint(visible = hintVisible, enabled = enabled)
     }
 }
 
@@ -46,9 +45,9 @@ private fun InnerTextFieldNonEmptyEnabledPreview() {
         Surface {
             InnerTextField(
                 modifier = Modifier.fillMaxWidth(),
-                query = PreviewData.Query.NonEmpty,
+                hintVisible = false,
                 enabled = true,
-                innerTextField = { Text(text = PreviewData.Query.NonEmpty.text) },
+                innerTextField = { Text(text = PreviewData.Query.NonEmpty) },
             )
         }
     }
@@ -69,9 +68,9 @@ private fun InnerTextFieldNonEmptyDisabledPreview() {
         Surface {
             InnerTextField(
                 modifier = Modifier.fillMaxWidth(),
-                query = PreviewData.Query.NonEmpty,
+                hintVisible = false,
                 enabled = false,
-                innerTextField = { Text(text = PreviewData.Query.NonEmpty.text) },
+                innerTextField = { Text(text = PreviewData.Query.NonEmpty) },
             )
         }
     }
@@ -92,9 +91,9 @@ private fun InnerTextFieldEmptyEnabledPreview() {
         Surface {
             InnerTextField(
                 modifier = Modifier.fillMaxWidth(),
-                query = PreviewData.Query.Empty,
+                hintVisible = true,
                 enabled = true,
-                innerTextField = { Text(text = PreviewData.Query.Empty.text) },
+                innerTextField = { Text(text = PreviewData.Query.Empty) },
             )
         }
     }
@@ -115,9 +114,9 @@ private fun InnerTextFieldEmptyDisabledPreview() {
         Surface {
             InnerTextField(
                 modifier = Modifier.fillMaxWidth(),
-                query = PreviewData.Query.Empty,
+                hintVisible = true,
                 enabled = false,
-                innerTextField = { Text(text = PreviewData.Query.Empty.text) },
+                innerTextField = { Text(text = PreviewData.Query.Empty) },
             )
         }
     }

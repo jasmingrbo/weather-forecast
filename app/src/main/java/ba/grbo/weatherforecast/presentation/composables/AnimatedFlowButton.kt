@@ -27,7 +27,7 @@ fun AnimatedOverflowButton(
     onClick: () -> Unit
 ) {
     locationSearcherFocusedTransition.AnimatedVisibility(
-        visible = { isFocused -> !isFocused },
+        visible = { focused -> !focused },
         enter = customFadeIn() + expandHorizontally(
             expandFrom = Alignment.Start,
             animationSpec = tween(easing = LinearOutSlowInEasing)

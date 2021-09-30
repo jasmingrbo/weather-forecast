@@ -1,19 +1,15 @@
 package ba.grbo.weatherforecast.framework.data
 
-import androidx.compose.ui.text.input.TextFieldValue
 import ba.grbo.core.domain.Constants
 import ba.grbo.weatherforecast.framework.data.CommonBodyState.AppBarState.Overview.OverviewAppBarState
-import ba.grbo.weatherforecast.framework.mics.Default
 import ba.grbo.weatherforecast.framework.mics.EMPTY
 import ba.grbo.weatherforecast.framework.mics.WHITESPACE
-import ba.grbo.weatherforecast.framework.mics.removeLastChar
-import ba.grbo.weatherforecast.framework.mics.updateText
 
 data class CommonBodyState(
     val appBarState: AppBarState,
     val internetAvailabilityBannerState: InternetAvailabilityBannerState
 ) {
-    fun updateQuery(query: TextFieldValue) = updateAppBarState { it.updateQuery(query) }
+    fun updateQuery(query: String) = updateAppBarState { it.updateQuery(query) }
 
     fun updateFocusedToTrue() = updateAppBarState { it.updateFocused(true) }
 
@@ -23,8 +19,8 @@ data class CommonBodyState(
 
     fun updateHideKeyboardToFalse() = updateAppBarState { it.updateHideKeyboard(false) }
 
-    fun updateUnfocusToTrueAndResetQuery() = updateAppBarState {
-        it.updateUnfocusToTrueAndResetQuery()
+    fun updateUnfocusToTrue() = updateAppBarState {
+        it.updateUnfocusToTrue()
     }
 
     fun updateFocusedAndUnfocusToFalse() = updateAppBarState { it.updateFocusedAndUnfocusToFalse() }
@@ -38,15 +34,13 @@ data class CommonBodyState(
     sealed class AppBarState {
         data class Overview(val value: OverviewAppBarState) : AppBarState() {
             data class OverviewAppBarState(
-                val query: TextFieldValue,
+                val query: String,
                 val focused: Boolean,
                 val enabled: Boolean,
                 val unfocus: Boolean,
                 val hideKeyboard: Boolean
             ) {
-                fun updateQuery(query: TextFieldValue) = copy(
-                    query = query.updateText(onQueryChange(query.text))
-                )
+                fun updateQuery(query: String) = copy(query = onQueryChange(query))
 
                 fun updateFocused(focused: Boolean) = copy(focused = focused)
 
@@ -54,9 +48,7 @@ data class CommonBodyState(
 
                 fun updateHideKeyboard(hideKeyboard: Boolean) = copy(hideKeyboard = hideKeyboard)
 
-                fun updateUnfocusToTrueAndResetQuery() = copy(
-                    unfocus = true, query = query.copy(text = query.text.removeLastChar())
-                )
+                fun updateUnfocusToTrue() = copy(unfocus = true)
 
                 fun updateFocusedAndUnfocusToFalse() = copy(focused = false, unfocus = false)
 
@@ -79,7 +71,7 @@ data class CommonBodyState(
 
                 companion object {
                     val Default = OverviewAppBarState(
-                        query = TextFieldValue.Default,
+                        query = String.EMPTY,
                         focused = false,
                         enabled = true,
                         unfocus = false,

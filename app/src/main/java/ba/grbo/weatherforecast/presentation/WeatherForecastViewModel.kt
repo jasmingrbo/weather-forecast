@@ -3,7 +3,6 @@ package ba.grbo.weatherforecast.presentation
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ba.grbo.weatherforecast.framework.data.Body.DETAILS
@@ -19,7 +18,6 @@ import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnResetButtonClick
 import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnSoftwareKeyboardHidden
 import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnUpButtonClick
 import ba.grbo.weatherforecast.framework.data.CommonBodyState
-import ba.grbo.weatherforecast.framework.mics.isEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -34,17 +32,11 @@ class WeatherForecastViewModel @Inject constructor() : ViewModel() {
 
     private var resetQueryJob: Job? = null
 
-    // to prevent updating query's composition when cursor not at the end and we start resetting
-    // the query
-    private var canUpdateQuery = true
-
     fun onEvent(event: CommonBodyEvent) {
         when (event) {
             is OnQueryChange -> {
-                if (canUpdateQuery) {
-                    resetQueryJob?.cancel()
-                    state = state.updateQuery(event.query)
-                }
+                resetQueryJob?.cancel()
+                state = state.updateQuery(event.query)
             }
             is OnFocusChanged -> {
                 state = if (event.focused) {
@@ -56,11 +48,9 @@ class WeatherForecastViewModel @Inject constructor() : ViewModel() {
             is OnUpButtonClick -> when (event.body) {
                 OVERVIEW -> {
                     resetQueryJob = viewModelScope.launch {
-                        canUpdateQuery = false
                         delay(90) // 375 the whole ripple animation
-                        state = state.updateUnfocusToTrueAndResetQuery()
-                        resetQuery(initialDelay = true)
-                        canUpdateQuery = true
+                        state = state.updateUnfocusToTrue()
+                        resetQuery()
                     }
                 }
                 DETAILS -> {
@@ -81,19 +71,16 @@ class WeatherForecastViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    private suspend fun resetQuery(
-        duration: Double = 150.0,
-        initialDelay: Boolean = false
-    ) {
+    private suspend fun resetQuery(duration: Double = 150.0) {
         val query = (state.appBarState as CommonBodyState.AppBarState.Overview).value.query
         if (query.isEmpty()) return
 
-        val delayDuration = (duration / query.text.length).roundToLong()
+        val delayDuration = (duration / query.length).roundToLong()
 
-        suspend fun updateQuery(query: TextFieldValue) {
+        suspend fun updateQuery(query: String) {
             if (query.isEmpty()) state = state.updateQuery(query)
             else {
-                val temp = query.copy(text = query.text.substring(0 until query.text.lastIndex))
+                val temp = query.substring(0 until query.lastIndex)
                 state = state.updateQuery(temp)
                 delay(delayDuration)
                 // Don't have to check for coroutineContext.isActive, because we are calling
@@ -103,7 +90,6 @@ class WeatherForecastViewModel @Inject constructor() : ViewModel() {
             }
         }
 
-        if (initialDelay) delay(delayDuration)
         updateQuery(query)
     }
 }

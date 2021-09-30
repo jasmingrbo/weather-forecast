@@ -1,6 +1,5 @@
 package ba.grbo.weatherforecast.framework.mics
 
-import androidx.compose.ui.text.input.TextFieldValue
 import ba.grbo.weatherforecast.framework.data.CommonBodyState
 
 object PreviewData {
@@ -47,7 +46,7 @@ object PreviewData {
     }
 
     object Query {
-        val NonEmpty = TextFieldValue(text = QUERY)
-        val Empty = TextFieldValue(text = String.EMPTY)
+        const val NonEmpty = QUERY
+        val Empty = String.EMPTY
     }
 }

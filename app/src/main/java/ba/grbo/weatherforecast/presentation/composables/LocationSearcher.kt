@@ -25,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -37,10 +36,10 @@ import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 @Composable
 fun LocationSearcher(
     modifier: Modifier = Modifier,
-    query: TextFieldValue,
+    query: String,
     enabled: Boolean,
     focusedTransition: Transition<Boolean>,
-    onQueryChange: (TextFieldValue) -> Unit,
+    onQueryChange: (String) -> Unit,
     onFocusChanged: (Boolean) -> Unit,
     onUpButtonClick: () -> Unit,
     onResetButtonClick: () -> Unit,

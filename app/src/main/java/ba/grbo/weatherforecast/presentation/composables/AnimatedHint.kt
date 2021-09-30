@@ -5,19 +5,16 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
-import ba.grbo.weatherforecast.framework.mics.PreviewData
 import ba.grbo.weatherforecast.framework.mics.customFadeIn
 import ba.grbo.weatherforecast.framework.mics.customFadeOut
-import ba.grbo.weatherforecast.framework.mics.isEmpty
 import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun AnimatedHint(query: TextFieldValue, enabled: Boolean) {
+fun AnimatedHint(visible: Boolean, enabled: Boolean) {
     AnimatedVisibility(
-        visible = query.isEmpty(),
+        visible = visible,
         enter = customFadeIn(150), // total has to be 300, 150 + 150 (resetQuery animation)
         exit = customFadeOut()
     ) {
@@ -26,20 +23,20 @@ fun AnimatedHint(query: TextFieldValue, enabled: Boolean) {
 }
 
 @Preview(
-    name = "Light-NonEmptyEnabled",
+    name = "Light-VisibleEnabled",
     showBackground = true
 )
 @Preview(
-    name = "Dark-NonEmptyEnabled",
+    name = "Dark-VisibleEnabled",
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-private fun AnimatedHintNonEmptyEnabledPreview() {
+private fun AnimatedHintVisibleEnabledPreview() {
     WeatherForecastTheme {
         Surface {
             AnimatedHint(
-                query = PreviewData.Query.NonEmpty,
+                visible = true,
                 enabled = true
             )
         }
@@ -47,20 +44,20 @@ private fun AnimatedHintNonEmptyEnabledPreview() {
 }
 
 @Preview(
-    name = "Light-NonEmptyDisabled",
+    name = "Light-VisibleDisabled",
     showBackground = true
 )
 @Preview(
-    name = "Dark-NonEmptyDisabled",
+    name = "Dark-VisibleDisabled",
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-private fun AnimatedHintNonEmptyDisabledPreview() {
+private fun AnimatedHintVisibleDisabledPreview() {
     WeatherForecastTheme {
         Surface {
             AnimatedHint(
-                query = PreviewData.Query.NonEmpty,
+                visible = true,
                 enabled = false
             )
         }
@@ -68,20 +65,20 @@ private fun AnimatedHintNonEmptyDisabledPreview() {
 }
 
 @Preview(
-    name = "Light-EmptyEnabled",
+    name = "Light-InvisibleEnabled",
     showBackground = true
 )
 @Preview(
-    name = "Dark-EmptyEnabled",
+    name = "Dark-InvisibleEnabled",
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-private fun AnimatedHintEmptyEnabledPreview() {
+private fun AnimatedHintInvisibleEnabledPreview() {
     WeatherForecastTheme {
         Surface {
             AnimatedHint(
-                query = PreviewData.Query.Empty,
+                visible = false,
                 enabled = true
             )
         }
@@ -89,20 +86,20 @@ private fun AnimatedHintEmptyEnabledPreview() {
 }
 
 @Preview(
-    name = "Light-EmptyDisabled",
+    name = "Light-InvisibleDisabled",
     showBackground = true
 )
 @Preview(
-    name = "Dark-EmptyDisabled",
+    name = "Dark-InvisibleDisabled",
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-private fun AnimatedHintEmptyDisabledPreview() {
+private fun AnimatedHintInvisibleDisabledPreview() {
     WeatherForecastTheme {
         Surface {
             AnimatedHint(
-                query = PreviewData.Query.Empty,
+                visible = false,
                 enabled = false
             )
         }

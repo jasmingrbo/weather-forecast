@@ -33,8 +33,8 @@ fun AnimatedLeadingIcon(
     locationSearcherFocusedTransition.AnimatedContent(
         transitionSpec = { createLeadingIconTransitionSpec() },
         contentAlignment = Alignment.CenterStart
-    ) { targetState ->
-        if (targetState) UpButton(
+    ) { focused ->
+        if (focused) UpButton(
             modifier = Modifier.padding(start = 0.dp, end = 8.dp),
             enabled = enabled,
             onClick = onClick

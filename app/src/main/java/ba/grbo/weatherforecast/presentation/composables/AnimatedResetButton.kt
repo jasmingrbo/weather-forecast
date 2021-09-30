@@ -7,22 +7,19 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
-import ba.grbo.weatherforecast.framework.mics.PreviewData
-import ba.grbo.weatherforecast.framework.mics.isNotEmpty
 import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AnimatedResetButton(
     modifier: Modifier = Modifier,
-    query: TextFieldValue,
+    visible: Boolean,
     enabled: Boolean,
     onClick: () -> Unit
 ) {
     AnimatedVisibility(
-        visible = query.isNotEmpty(),
+        visible = visible,
         enter = fadeIn(),
         exit = fadeOut()
     ) {
@@ -35,19 +32,19 @@ fun AnimatedResetButton(
 }
 
 @Preview(
-    name = "Light-NonEmptyEnabled",
+    name = "Light-VisibleEnabled",
     showBackground = true
 )
 @Preview(
-    name = "Dark-NonEmptyEnabled",
+    name = "Dark-VisibleEnabled",
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-private fun AnimatedResetButtonNonEmptyEnabledPreview() {
+private fun AnimatedResetButtonVisibleEnabledPreview() {
     WeatherForecastTheme {
         AnimatedResetButton(
-            query = PreviewData.Query.NonEmpty,
+            visible = true,
             enabled = true,
             onClick = {}
         )
@@ -55,19 +52,19 @@ private fun AnimatedResetButtonNonEmptyEnabledPreview() {
 }
 
 @Preview(
-    name = "Light-NonEmptyDisabled",
+    name = "Light-VisibleDisabled",
     showBackground = true
 )
 @Preview(
-    name = "Dark-NonEmptyDisabled",
+    name = "Dark-VisibleDisabled",
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-private fun AnimatedResetButtonNonEmptyDisabledPreview() {
+private fun AnimatedResetButtonVisibleDisabledPreview() {
     WeatherForecastTheme {
         AnimatedResetButton(
-            query = PreviewData.Query.NonEmpty,
+            visible = true,
             enabled = false,
             onClick = {}
         )
@@ -75,19 +72,19 @@ private fun AnimatedResetButtonNonEmptyDisabledPreview() {
 }
 
 @Preview(
-    name = "Light-EmptyEnabled",
+    name = "Light-InvisibleEnabled",
     showBackground = true
 )
 @Preview(
-    name = "Dark-EmptyEnabled",
+    name = "Dark-InvisibleEnabled",
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-private fun AnimatedResetButtonEmptyEnabledPreview() {
+private fun AnimatedResetButtonInvisibleEnabledPreview() {
     WeatherForecastTheme {
         AnimatedResetButton(
-            query = PreviewData.Query.Empty,
+            visible = false,
             enabled = true,
             onClick = {}
         )
@@ -95,19 +92,19 @@ private fun AnimatedResetButtonEmptyEnabledPreview() {
 }
 
 @Preview(
-    name = "Light-EmptyDisabled",
+    name = "Light-InvisibleDisabled",
     showBackground = true
 )
 @Preview(
-    name = "Dark-EmptyDisabled",
+    name = "Dark-InvisibleDisabled",
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-private fun AnimatedResetButtonEmptyDisabledPreview() {
+private fun AnimatedResetButtonInvisibleDisabledPreview() {
     WeatherForecastTheme {
         AnimatedResetButton(
-            query = PreviewData.Query.Empty,
+            visible = false,
             enabled = false,
             onClick = {}
         )
