@@ -24,7 +24,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,25 +39,18 @@ fun LocationSearcher(
     modifier: Modifier = Modifier,
     query: TextFieldValue,
     enabled: Boolean,
-    hideKeyboard: Boolean,
     focusedTransition: Transition<Boolean>,
     onQueryChange: (TextFieldValue) -> Unit,
     onFocusChanged: (Boolean) -> Unit,
     onUpButtonClick: () -> Unit,
     onResetButtonClick: () -> Unit,
-    onDoneImeActionPressed: () -> Unit,
-    onSoftwareKeyboardHidden: () -> Unit
+    onDoneImeActionPressed: () -> Unit
 ) {
     val endPadding by createHorizontalPadding(
         focusedTransition = focusedTransition,
         focusedPadding = 12.dp,
         unfocusedPadding = 2.dp
     )
-
-    if (hideKeyboard) {
-        LocalSoftwareKeyboardController.current?.hide()
-        onSoftwareKeyboardHidden()
-    }
 
     BasicTextField(
         modifier = modifier
@@ -121,14 +113,12 @@ private fun LocationSearcherNonEmptyUnfocusedEnabledPreview() {
             LocationSearcher(
                 query = PreviewData.Query.NonEmpty,
                 enabled = true,
-                hideKeyboard = false,
                 focusedTransition = updateTransition(targetState = false, label = String.EMPTY),
                 onQueryChange = {},
                 onFocusChanged = {},
                 onUpButtonClick = {},
                 onResetButtonClick = {},
-                onDoneImeActionPressed = {},
-                onSoftwareKeyboardHidden = {}
+                onDoneImeActionPressed = {}
             )
         }
     }
@@ -150,14 +140,12 @@ private fun LocationSearcherNonEmptyUnfocusedDisabledPreview() {
             LocationSearcher(
                 query = PreviewData.Query.NonEmpty,
                 enabled = false,
-                hideKeyboard = false,
                 focusedTransition = updateTransition(targetState = false, label = String.EMPTY),
                 onQueryChange = {},
                 onFocusChanged = {},
                 onUpButtonClick = {},
                 onResetButtonClick = {},
-                onDoneImeActionPressed = {},
-                onSoftwareKeyboardHidden = {}
+                onDoneImeActionPressed = {}
             )
         }
     }
@@ -179,14 +167,12 @@ private fun LocationSearcherEmptyFocusedEnabledPreview() {
             LocationSearcher(
                 query = PreviewData.Query.Empty,
                 enabled = true,
-                hideKeyboard = false,
                 focusedTransition = updateTransition(targetState = true, label = String.EMPTY),
                 onQueryChange = {},
                 onFocusChanged = {},
                 onUpButtonClick = {},
                 onResetButtonClick = {},
-                onDoneImeActionPressed = {},
-                onSoftwareKeyboardHidden = {}
+                onDoneImeActionPressed = {}
             )
         }
     }
@@ -208,14 +194,12 @@ private fun LocationSearcherEmptyFocusedDisabledPreview() {
             LocationSearcher(
                 query = PreviewData.Query.Empty,
                 enabled = false,
-                hideKeyboard = false,
                 focusedTransition = updateTransition(targetState = true, label = String.EMPTY),
                 onQueryChange = {},
                 onFocusChanged = {},
                 onUpButtonClick = {},
                 onResetButtonClick = {},
-                onDoneImeActionPressed = {},
-                onSoftwareKeyboardHidden = {}
+                onDoneImeActionPressed = {}
             )
         }
     }

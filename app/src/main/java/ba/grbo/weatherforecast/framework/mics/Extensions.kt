@@ -8,7 +8,6 @@ val String.Companion.WHITESPACE: String
 val String.Companion.EMPTY: String
     get() = ""
 
-
 val Char.Companion.WHITESPACE: Char
     get() = ' '
 

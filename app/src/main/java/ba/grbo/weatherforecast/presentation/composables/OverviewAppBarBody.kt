@@ -1,5 +1,6 @@
 package ba.grbo.weatherforecast.presentation.composables
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.animation.core.ExperimentalTransitionApi
 import androidx.compose.animation.core.createChildTransition
@@ -8,10 +9,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ba.grbo.weatherforecast.framework.data.Body
@@ -20,33 +22,30 @@ import ba.grbo.weatherforecast.framework.data.CommonBodyState
 import ba.grbo.weatherforecast.framework.mics.PreviewData
 import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
-@OptIn(ExperimentalTransitionApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalTransitionApi::class)
 @Composable
 fun OverviewAppBarBody(
     state: CommonBodyState.AppBarState.Overview.OverviewAppBarState,
     onEvent: (CommonBodyEvent) -> Unit
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
+        if (state.unfocus) unfocusLocationSearcher()
+        if (state.hideKeyboard) hideKeyboard(onEvent)
         val transition = updateTransition(
             targetState = state.focused,
             label = "OverviewAppBarBody-Transition"
         )
 
-        val focusManager = LocalFocusManager.current
-        LaunchedEffect(key1 = state.unfocus) { if (state.unfocus) focusManager.clearFocus(true) }
-
         LocationSearcher(
             modifier = Modifier.weight(1f),
             query = state.query,
             enabled = state.enabled,
-            hideKeyboard = state.hideKeyboard,
             focusedTransition = transition.createChildTransition { focused -> focused },
             onQueryChange = { query -> onEvent(CommonBodyEvent.OnQueryChange(query)) },
             onFocusChanged = { focused -> onEvent(CommonBodyEvent.OnFocusChanged(focused)) },
             onUpButtonClick = { onEvent(CommonBodyEvent.OnUpButtonClick(Body.OVERVIEW)) },
             onResetButtonClick = { onEvent(CommonBodyEvent.OnResetButtonClick) },
-            onDoneImeActionPressed = { onEvent(CommonBodyEvent.OnDoneImeActionPressed) },
-            onSoftwareKeyboardHidden = { onEvent(CommonBodyEvent.OnSoftwareKeyboardHidden) }
+            onDoneImeActionPressed = { onEvent(CommonBodyEvent.OnDoneImeActionPressed) }
         )
         AnimatedOverflowButton(
             modifier = Modifier.padding(end = 2.dp),
@@ -56,6 +55,18 @@ fun OverviewAppBarBody(
             onClick = { onEvent(CommonBodyEvent.OnOverflowButtonClick) }
         )
     }
+}
+
+@SuppressLint("ComposableNaming")
+@Composable
+private fun unfocusLocationSearcher() = LocalFocusManager.current.clearFocus(true)
+
+@SuppressLint("ComposableNaming")
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+private fun hideKeyboard(onEvent: (CommonBodyEvent) -> Unit) {
+    LocalSoftwareKeyboardController.current?.hide()
+    onEvent(CommonBodyEvent.OnSoftwareKeyboardHidden)
 }
 
 @Preview(
