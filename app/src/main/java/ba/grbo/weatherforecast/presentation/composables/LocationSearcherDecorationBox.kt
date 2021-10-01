@@ -1,7 +1,6 @@
 package ba.grbo.weatherforecast.presentation.composables
 
 import android.content.res.Configuration
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.Transition
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
@@ -21,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import ba.grbo.weatherforecast.framework.mics.PreviewData
 import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun LocationSearcherDecorationBox(
     query: String,

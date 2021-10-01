@@ -1,7 +1,6 @@
 package ba.grbo.weatherforecast.presentation.composables
 
 import android.content.res.Configuration
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Surface
@@ -13,7 +12,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import ba.grbo.weatherforecast.framework.mics.PreviewData
 import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun InnerTextField(
     modifier: Modifier = Modifier,

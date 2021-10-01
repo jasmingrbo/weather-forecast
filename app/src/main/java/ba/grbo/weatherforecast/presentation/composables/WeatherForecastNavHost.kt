@@ -2,14 +2,16 @@ package ba.grbo.weatherforecast.presentation.composables
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import ba.grbo.weatherforecast.framework.data.Body
-import ba.grbo.weatherforecast.presentation.composables.bodies.DetailsBody
-import ba.grbo.weatherforecast.presentation.composables.bodies.OverviewBody
-import ba.grbo.weatherforecast.presentation.composables.bodies.SettingsBody
+import ba.grbo.weatherforecast.framework.data.Screen
+import ba.grbo.weatherforecast.presentation.OverviewScreenViewModel
+import ba.grbo.weatherforecast.presentation.composables.screens.DetailsScreen
+import ba.grbo.weatherforecast.presentation.composables.screens.OverviewScreen
+import ba.grbo.weatherforecast.presentation.composables.screens.SettingsScreen
 
 @Composable
 fun WeatherForecastNavHost(
@@ -19,17 +21,21 @@ fun WeatherForecastNavHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = Body.OVERVIEW.route,
+        startDestination = Screen.OVERVIEW.route,
     ) {
-        composable(Body.OVERVIEW.route) {
-            OverviewBody()
+        composable(Screen.OVERVIEW.route) {
+            val viewModel = hiltViewModel<OverviewScreenViewModel>()
+            OverviewScreen(
+                state = viewModel.state,
+                onEvent = viewModel::onEvent
+            )
         }
-        composable(Body.DETAILS.route) {
-            DetailsBody()
+        composable(Screen.DETAILS.route) {
+            DetailsScreen()
         }
 
-        composable(Body.SETTINGS.route) {
-            SettingsBody()
+        composable(Screen.SETTINGS.route) {
+            SettingsScreen()
         }
     }
 }

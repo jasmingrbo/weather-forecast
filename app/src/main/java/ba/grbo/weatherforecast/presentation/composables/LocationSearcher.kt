@@ -20,7 +20,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
@@ -32,7 +31,6 @@ import ba.grbo.weatherforecast.framework.mics.EMPTY
 import ba.grbo.weatherforecast.framework.mics.PreviewData
 import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LocationSearcher(
     modifier: Modifier = Modifier,

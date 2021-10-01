@@ -17,23 +17,27 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ba.grbo.weatherforecast.framework.data.Body
-import ba.grbo.weatherforecast.framework.data.CommonBodyEvent
-import ba.grbo.weatherforecast.framework.data.CommonBodyState
+import ba.grbo.weatherforecast.framework.data.OverviewScreenEvent
+import ba.grbo.weatherforecast.framework.data.OverviewScreenEvent.AppBarEvent.FocusChanged
+import ba.grbo.weatherforecast.framework.data.OverviewScreenEvent.AppBarEvent.OverflowButtonClicked
+import ba.grbo.weatherforecast.framework.data.OverviewScreenEvent.AppBarEvent.QueryChanged
+import ba.grbo.weatherforecast.framework.data.OverviewScreenEvent.AppBarEvent.ResetButtonClicked
+import ba.grbo.weatherforecast.framework.data.OverviewScreenEvent.AppBarEvent.UpButtonClicked
+import ba.grbo.weatherforecast.framework.data.OverviewScreenEvent.KeyboardEvent.DoneImeActionClicked
+import ba.grbo.weatherforecast.framework.data.OverviewScreenEvent.KeyboardEvent.KeyboardHidden
+import ba.grbo.weatherforecast.framework.data.OverviewScreenState.OverviewAppBarState
 import ba.grbo.weatherforecast.framework.mics.PreviewData
 import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalTransitionApi::class)
 @Composable
 fun OverviewAppBarBody(
-    state: CommonBodyState.AppBarState.Overview.OverviewAppBarState,
-    onEvent: (CommonBodyEvent) -> Unit
+    state: OverviewAppBarState,
+    onEvent: (OverviewScreenEvent) -> Unit,
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         if (state.unfocus) unfocusLocationSearcher()
-        if (state.hideKeyboard) hideKeyboard(
-            onKeyboardHidden = { onEvent(CommonBodyEvent.OnSoftwareKeyboardHidden) }
-        )
+        if (state.hideKeyboard) hideKeyboard(onKeyboardHidden = { onEvent(KeyboardHidden) })
         val transition = updateTransition(
             targetState = state.focused,
             label = "OverviewAppBarBody-Transition"
@@ -44,18 +48,18 @@ fun OverviewAppBarBody(
             query = state.query,
             enabled = state.enabled,
             focusedTransition = transition.createChildTransition { focused -> focused },
-            onQueryChange = { query -> onEvent(CommonBodyEvent.OnQueryChange(query)) },
-            onFocusChanged = { focused -> onEvent(CommonBodyEvent.OnFocusChanged(focused)) },
-            onUpButtonClick = { onEvent(CommonBodyEvent.OnUpButtonClick(Body.OVERVIEW)) },
-            onResetButtonClick = { onEvent(CommonBodyEvent.OnResetButtonClick) },
-            onDoneImeActionPressed = { onEvent(CommonBodyEvent.OnDoneImeActionPressed) }
+            onQueryChange = { query -> onEvent(QueryChanged(query)) },
+            onFocusChanged = { focused -> onEvent(FocusChanged(focused)) },
+            onUpButtonClick = { onEvent(UpButtonClicked) },
+            onResetButtonClick = { onEvent(ResetButtonClicked) },
+            onDoneImeActionPressed = { onEvent(DoneImeActionClicked) }
         )
         AnimatedOverflowButton(
             modifier = Modifier.padding(end = 2.dp),
             locationSearcherFocusedTransition = transition.createChildTransition { focused ->
                 focused
             },
-            onClick = { onEvent(CommonBodyEvent.OnOverflowButtonClick) }
+            onClick = { onEvent(OverflowButtonClicked) }
         )
     }
 }
@@ -92,7 +96,7 @@ private fun OverviewAppBarBodyNonEmptyUnfocusedEnabledPreview() {
     WeatherForecastTheme {
         Surface {
             OverviewAppBarBody(
-                state = PreviewData.OverviewAppBarState.NonEmptyUnfocusedEnabled.value,
+                state = PreviewData.OverviewAppBarState.NonEmptyUnfocusedEnabled,
                 onEvent = {}
             )
         }
@@ -113,7 +117,7 @@ private fun OverviewAppBarBodyNonEmptyUnfocusedDisabledPreview() {
     WeatherForecastTheme {
         Surface {
             OverviewAppBarBody(
-                state = PreviewData.OverviewAppBarState.NonEmptyUnfocusedDisabled.value,
+                state = PreviewData.OverviewAppBarState.NonEmptyUnfocusedDisabled,
                 onEvent = {}
             )
         }
@@ -134,7 +138,7 @@ private fun OverviewAppBarBodyEmptyFocusedEnabledPreview() {
     WeatherForecastTheme {
         Surface {
             OverviewAppBarBody(
-                state = PreviewData.OverviewAppBarState.EmptyFocusedEnabled.value,
+                state = PreviewData.OverviewAppBarState.EmptyFocusedEnabled,
                 onEvent = {}
             )
         }
@@ -155,7 +159,7 @@ private fun OverviewAppBarBodyEmptyFocusedDisabledPreview() {
     WeatherForecastTheme {
         Surface {
             OverviewAppBarBody(
-                state = PreviewData.OverviewAppBarState.EmptyFocusedDisabled.value,
+                state = PreviewData.OverviewAppBarState.EmptyFocusedDisabled,
                 onEvent = {}
             )
         }
