@@ -3,6 +3,8 @@ plugins {
     id "kotlin-android"
     id "kotlin-kapt"
     id "dagger.hilt.android.plugin"
+    id "com.google.gms.google-services"
+    id "com.google.firebase.crashlytics"
 }
 
 android {
@@ -74,6 +76,14 @@ dependencies {
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
 
     // Hilt
-    implementation "com.google.dagger:hilt-android:2.38.1"
-    kapt "com.google.dagger:hilt-android-compiler:2.38.1"
+    implementation 'com.google.dagger:hilt-android:2.39'
+    kapt 'com.google.dagger:hilt-android-compiler:2.39'
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:$timber_version"
+
+    // Firebase
+    implementation platform("com.google.firebase:firebase-bom:$bom_version")
+    implementation "com.google.firebase:firebase-crashlytics-ktx"
+    implementation "com.google.firebase:firebase-analytics-ktx"
 }

@@ -1,6 +1,5 @@
 package ba.grbo.weatherforecast.framework.data
 
-import android.util.Log
 import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnDoneImeActionPressed
 import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnEnabledChanged
 import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnFocusChanged
@@ -117,10 +116,8 @@ class CommonBodyEventHandler @Inject constructor(
         val delayDuration = (duration / query.length).roundToLong()
 
         suspend fun updateQuery(query: String) {
-            if (query.isEmpty()) {
-                Log.i("MojViewModel", "resetQuery DONE")
-                send(state.updateQuery(query))
-            } else {
+            if (query.isEmpty()) send(state.updateQuery(query))
+            else {
                 val temp = query.substring(0 until query.lastIndex)
                 send(state.updateQuery(temp))
                 delay(delayDuration)
