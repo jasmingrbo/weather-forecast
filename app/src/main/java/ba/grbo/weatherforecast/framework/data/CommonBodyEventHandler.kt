@@ -9,17 +9,22 @@ import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnQueryChange
 import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnResetButtonClick
 import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnSoftwareKeyboardHidden
 import ba.grbo.weatherforecast.framework.data.CommonBodyEvent.OnUpButtonClick
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.math.roundToLong
 
-@ExperimentalCoroutinesApi
-object CommonBodyEventHandler {
+@OptIn(ExperimentalCoroutinesApi::class)
+class CommonBodyEventHandler @Inject constructor(
+    private val dispatcher: CoroutineDispatcher,
+) {
     private var resetQueryJob: Job? = null
 
     operator fun invoke(event: CommonBodyEvent, state: CommonBodyState) = channelFlow {
@@ -34,7 +39,7 @@ object CommonBodyEventHandler {
             is OnDoneImeActionPressed -> onDoneImeActionPressed(state)
             is OnSoftwareKeyboardHidden -> onSoftwareKeyboardHidden(state)
         }
-    }
+    }.flowOn(dispatcher)
 
     private suspend fun ProducerScope<CommonBodyState>.onQueryChange(
         query: String,

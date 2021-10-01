@@ -17,6 +17,6 @@ fun customFadeIn(duration: Int = AnimationConstants.DefaultDurationMillis) = fad
 )
 
 @OptIn(ExperimentalAnimationApi::class)
-fun customFadeOut() = fadeOut(
-    animationSpec = tween(durationMillis = 200, easing = FastOutLinearInEasing)
+fun customFadeOut(duration: Int = 200) = fadeOut(
+    animationSpec = tween(durationMillis = duration, easing = FastOutLinearInEasing)
 )
