@@ -1,0 +1,144 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "c019355503fd85ca1550feeb183ebc42",
+    "entities": [
+      {
+        "tableName": "places_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `coordinates` TEXT NOT NULL, `name` TEXT NOT NULL, `address` TEXT NOT NULL, `country_code` TEXT NOT NULL, `current_weather` TEXT NOT NULL, `hourly_forecast` TEXT NOT NULL, `daily_forecast` TEXT NOT NULL, `weather_alerts` TEXT NOT NULL, `air_pollution` TEXT NOT NULL, `weather_data_stale` INTEGER NOT NULL, `refresh_failed` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "coordinates",
+            "columnName": "coordinates",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "address",
+            "columnName": "address",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "countryCode",
+            "columnName": "country_code",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currentWeather",
+            "columnName": "current_weather",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hourlyForecast",
+            "columnName": "hourly_forecast",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dailyForecast",
+            "columnName": "daily_forecast",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "weatherAlert",
+            "columnName": "weather_alerts",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "airPollution",
+            "columnName": "air_pollution",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "weatherDataStale",
+            "columnName": "weather_data_stale",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "refreshFailed",
+            "columnName": "refresh_failed",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_places_table_coordinates",
+            "unique": true,
+            "columnNames": [
+              "coordinates"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_places_table_coordinates` ON `${TABLE_NAME}` (`coordinates`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "queries_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `value` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_queries_table_value",
+            "unique": true,
+            "columnNames": [
+              "value"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_queries_table_value` ON `${TABLE_NAME}` (`value`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c019355503fd85ca1550feeb183ebc42')"
+    ]
+  }
+}

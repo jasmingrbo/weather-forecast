@@ -16,6 +16,7 @@ object Message {
             append("message:    %s\n  ")
             append("info:       %s\n  ")
             append("thread:     %s\n  ")
+            append("cause:      %s\n  ")
             append("suppressed: %s\n ")
         }.toString()
 
@@ -56,6 +57,7 @@ object Message {
         throwable.messageOrNone,
         element.info,
         Thread.currentThread().name,
+        throwable.causeInfoOrNone,
         throwable.suppressedInfoOrNone
     )
 }

@@ -8,6 +8,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="navigation_bar_divider">#1F000000</color>
-    <color name="background">#FFFAFAFA</color>
+    <!-- For whatever reason this color must not contain transparency, otherwise "the color" behind
+    it gets to be shown, even though there should be no color behind it... Works fine with
+     transparency when set programmatically in the activity. But if we try to set values before
+     keyboard was ever shown it doesn't get acknowledged, therefore we have to set it over here
+     without transparency. -->
+    <!-- Equivalent of 1FCBCBCB but without any transparency -->
+    <color name="background">#F9F9F9</color>
 </resources>

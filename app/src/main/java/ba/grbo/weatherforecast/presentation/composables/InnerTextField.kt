@@ -1,16 +1,17 @@
 package ba.grbo.weatherforecast.presentation.composables
 
-import android.content.res.Configuration
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Surface
+import androidx.compose.material.ContentAlpha
+import androidx.compose.material.LocalTextStyle
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import ba.grbo.weatherforecast.framework.mics.PreviewData
-import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
 @Composable
 fun InnerTextField(
@@ -28,94 +29,83 @@ fun InnerTextField(
     }
 }
 
+// Simulating the inner text with a Text
+@Composable
+private fun InnerText(empty: Boolean, enabled: Boolean) {
+    Text(
+        text = if (!empty) PreviewData.Query.Sarajevo.text else PreviewData.Query.Empty.text,
+        style = LocalTextStyle.current.copy(
+            color = MaterialTheme.colors.onSurface.copy(
+                if (enabled) ContentAlpha.medium else ContentAlpha.disabled
+            )
+        )
+    )
+}
+
+@Preview(name = "NonEmptyEnabled")
 @Preview(
-    name = "Light-NonEmptyEnabled",
-    showBackground = true
-)
-@Preview(
-    name = "Dark-NonEmptyEnabled",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    name = "NonEmptyEnabled",
+    uiMode = UI_MODE_NIGHT_YES
 )
 @Composable
 private fun InnerTextFieldNonEmptyEnabledPreview() {
-    WeatherForecastTheme {
-        Surface {
-            InnerTextField(
-                modifier = Modifier.fillMaxWidth(),
-                hintVisible = false,
-                enabled = true,
-                innerTextField = { Text(text = PreviewData.Query.NonEmpty) },
-            )
-        }
+    Preview {
+        InnerTextField(
+            modifier = Modifier.fillMaxWidth(),
+            hintVisible = false,
+            enabled = false,
+            innerTextField = { InnerText(empty = false, enabled = true) }
+        )
     }
 }
 
+@Preview(name = "NonEmptyDisabled")
 @Preview(
-    name = "Light-NonEmptyDisabled",
-    showBackground = true
-)
-@Preview(
-    name = "Dark-NonEmptyDisabled",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    name = "NonEmptyDisabled",
+    uiMode = UI_MODE_NIGHT_YES
 )
 @Composable
 private fun InnerTextFieldNonEmptyDisabledPreview() {
-    WeatherForecastTheme {
-        Surface {
-            InnerTextField(
-                modifier = Modifier.fillMaxWidth(),
-                hintVisible = false,
-                enabled = false,
-                innerTextField = { Text(text = PreviewData.Query.NonEmpty) },
-            )
-        }
+    Preview {
+        InnerTextField(
+            modifier = Modifier.fillMaxWidth(),
+            hintVisible = false,
+            enabled = false,
+            innerTextField = { InnerText(empty = false, enabled = false) },
+        )
     }
 }
 
+@Preview(name = "EmptyEnabled")
 @Preview(
-    name = "Light-EmptyEnabled",
-    showBackground = true
-)
-@Preview(
-    name = "Dark-EmptyEnabled",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    name = "EmptyEnabled",
+    uiMode = UI_MODE_NIGHT_YES
 )
 @Composable
 private fun InnerTextFieldEmptyEnabledPreview() {
-    WeatherForecastTheme {
-        Surface {
-            InnerTextField(
-                modifier = Modifier.fillMaxWidth(),
-                hintVisible = true,
-                enabled = true,
-                innerTextField = { Text(text = PreviewData.Query.Empty) },
-            )
-        }
+    Preview {
+        InnerTextField(
+            modifier = Modifier.fillMaxWidth(),
+            hintVisible = true,
+            enabled = true,
+            innerTextField = { InnerText(empty = true, enabled = true) },
+        )
     }
 }
 
+@Preview(name = "EmptyDisabled")
 @Preview(
-    name = "Light-EmptyDisabled",
-    showBackground = true
-)
-@Preview(
-    name = "Dark-EmptyDisabled",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    name = "EmptyDisabled",
+    uiMode = UI_MODE_NIGHT_YES
 )
 @Composable
 private fun InnerTextFieldEmptyDisabledPreview() {
-    WeatherForecastTheme {
-        Surface {
-            InnerTextField(
-                modifier = Modifier.fillMaxWidth(),
-                hintVisible = true,
-                enabled = false,
-                innerTextField = { Text(text = PreviewData.Query.Empty) },
-            )
-        }
+    Preview {
+        InnerTextField(
+            modifier = Modifier.fillMaxWidth(),
+            hintVisible = true,
+            enabled = false,
+            innerTextField = { InnerText(empty = true, enabled = false) },
+        )
     }
 }

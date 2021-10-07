@@ -1,7 +1,7 @@
 package ba.grbo.weatherforecast.presentation.composables
 
-import android.content.res.Configuration
-import androidx.compose.animation.core.AnimationConstants
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.animation.core.AnimationConstants.DefaultDurationMillis
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.Transition
@@ -17,31 +17,31 @@ import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import ba.grbo.weatherforecast.framework.mics.EMPTY
+import ba.grbo.core.domain.DEFAULT
+import ba.grbo.weatherforecast.framework.mics.Constants.LocationSearcherExitAnimationDuration
 import ba.grbo.weatherforecast.framework.mics.PreviewData
-import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
 @Composable
 fun LocationSearcher(
     modifier: Modifier = Modifier,
-    query: String,
+    query: TextFieldValue,
     enabled: Boolean,
     focusedTransition: Transition<Boolean>,
-    onQueryChange: (String) -> Unit,
+    onQueryChange: (TextFieldValue) -> Unit,
     onFocusChanged: (Boolean) -> Unit,
     onUpButtonClick: () -> Unit,
     onResetButtonClick: () -> Unit,
-    onDoneImeActionPressed: () -> Unit
+    onDoneImeActionClick: () -> Unit
 ) {
     val endPadding by createHorizontalPadding(
         focusedTransition = focusedTransition,
@@ -57,12 +57,11 @@ fun LocationSearcher(
         onValueChange = onQueryChange,
         textStyle = LocalTextStyle.current.copy(
             color = LocalContentColor.current.copy(
-                if (enabled) LocalContentAlpha.current
-                else ContentAlpha.disabled
+                if (enabled) LocalContentAlpha.current else ContentAlpha.disabled
             )
         ),
         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-        keyboardActions = KeyboardActions(onDone = { onDoneImeActionPressed() }),
+        keyboardActions = KeyboardActions(onDone = { onDoneImeActionClick() }),
         singleLine = true,
         enabled = enabled,
         cursorBrush = SolidColor(MaterialTheme.colors.primary),
@@ -87,117 +86,93 @@ private fun createHorizontalPadding(
 ) = focusedTransition.animateDp(
     transitionSpec = {
         tween(
-            durationMillis = if (targetState) 200 else AnimationConstants.DefaultDurationMillis,
+            durationMillis = if (targetState) LocationSearcherExitAnimationDuration else DefaultDurationMillis,
             easing = if (targetState) FastOutLinearInEasing else LinearOutSlowInEasing
         )
     },
     label = "startPadding"
 ) { isFocused -> if (isFocused) focusedPadding else unfocusedPadding }
 
+@Preview(name = "NonEmptyUnfocusedEnabled")
 @Preview(
-    name = "Light-NonEmptyUnfocusedEnabled",
-    showBackground = true
-)
-@Preview(
-    name = "Dark-NonEmptyUnfocusedEnabled",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    name = "NonEmptyUnfocusedEnabled",
+    uiMode = UI_MODE_NIGHT_YES
 )
 @Composable
 private fun LocationSearcherNonEmptyUnfocusedEnabledPreview() {
-    WeatherForecastTheme {
-        Surface {
-            LocationSearcher(
-                query = PreviewData.Query.NonEmpty,
-                enabled = true,
-                focusedTransition = updateTransition(targetState = false, label = String.EMPTY),
-                onQueryChange = {},
-                onFocusChanged = {},
-                onUpButtonClick = {},
-                onResetButtonClick = {},
-                onDoneImeActionPressed = {}
-            )
-        }
+    Preview {
+        LocationSearcher(
+            query = PreviewData.Query.Sarajevo,
+            enabled = true,
+            focusedTransition = updateTransition(targetState = false, label = String.DEFAULT),
+            onQueryChange = {},
+            onFocusChanged = {},
+            onUpButtonClick = {},
+            onResetButtonClick = {},
+            onDoneImeActionClick = {}
+        )
     }
 }
 
+@Preview(name = "NonEmptyUnfocusedDisabled")
 @Preview(
-    name = "Light-NonEmptyUnfocusedDisabled",
-    showBackground = true
-)
-@Preview(
-    name = "Dark-NonEmptyUnfocusedDisabled",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    name = "NonEmptyUnfocusedDisabled",
+    uiMode = UI_MODE_NIGHT_YES
 )
 @Composable
 private fun LocationSearcherNonEmptyUnfocusedDisabledPreview() {
-    WeatherForecastTheme {
-        Surface {
-            LocationSearcher(
-                query = PreviewData.Query.NonEmpty,
-                enabled = false,
-                focusedTransition = updateTransition(targetState = false, label = String.EMPTY),
-                onQueryChange = {},
-                onFocusChanged = {},
-                onUpButtonClick = {},
-                onResetButtonClick = {},
-                onDoneImeActionPressed = {}
-            )
-        }
+    Preview {
+        LocationSearcher(
+            query = PreviewData.Query.Sarajevo,
+            enabled = false,
+            focusedTransition = updateTransition(targetState = false, label = String.DEFAULT),
+            onQueryChange = {},
+            onFocusChanged = {},
+            onUpButtonClick = {},
+            onResetButtonClick = {},
+            onDoneImeActionClick = {}
+        )
     }
 }
 
+@Preview(name = "EmptyFocusedEnabled")
 @Preview(
-    name = "Light-EmptyFocusedEnabled",
-    showBackground = true
-)
-@Preview(
-    name = "Dark-EmptyFocusedEnabled",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    name = "EmptyFocusedEnabled",
+    uiMode = UI_MODE_NIGHT_YES
 )
 @Composable
 private fun LocationSearcherEmptyFocusedEnabledPreview() {
-    WeatherForecastTheme {
-        Surface {
-            LocationSearcher(
-                query = PreviewData.Query.Empty,
-                enabled = true,
-                focusedTransition = updateTransition(targetState = true, label = String.EMPTY),
-                onQueryChange = {},
-                onFocusChanged = {},
-                onUpButtonClick = {},
-                onResetButtonClick = {},
-                onDoneImeActionPressed = {}
-            )
-        }
+    Preview {
+        LocationSearcher(
+            query = PreviewData.Query.Empty,
+            enabled = true,
+            focusedTransition = updateTransition(targetState = true, label = String.DEFAULT),
+            onQueryChange = {},
+            onFocusChanged = {},
+            onUpButtonClick = {},
+            onResetButtonClick = {},
+            onDoneImeActionClick = {}
+        )
     }
 }
 
+@Preview(name = "EmptyFocusedDisabled")
 @Preview(
-    name = "Light-EmptyFocusedDisabled",
-    showBackground = true
-)
-@Preview(
-    name = "Dark-EmptyFocusedDisabled",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    name = "EmptyFocusedDisabled",
+    uiMode = UI_MODE_NIGHT_YES
 )
 @Composable
 private fun LocationSearcherEmptyFocusedDisabledPreview() {
-    WeatherForecastTheme {
-        Surface {
-            LocationSearcher(
-                query = PreviewData.Query.Empty,
-                enabled = false,
-                focusedTransition = updateTransition(targetState = true, label = String.EMPTY),
-                onQueryChange = {},
-                onFocusChanged = {},
-                onUpButtonClick = {},
-                onResetButtonClick = {},
-                onDoneImeActionPressed = {}
-            )
-        }
+    Preview {
+        LocationSearcher(
+            query = PreviewData.Query.Empty,
+            enabled = false,
+            focusedTransition = updateTransition(targetState = true, label = String.DEFAULT),
+            onQueryChange = {},
+            onFocusChanged = {},
+            onUpButtonClick = {},
+            onResetButtonClick = {},
+            onDoneImeActionClick = {}
+        )
     }
 }

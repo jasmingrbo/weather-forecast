@@ -25,16 +25,25 @@ val Throwable?.simpleClassNameOrNone: String
 val Throwable?.messageOrNone: String
     get() = this?.message ?: Tree.EMPTY_MESSAGE
 
+val Throwable?.causeInfoOrNone: String
+    get() = if (this != null && cause != null) {
+        String.format(
+            CauseExceptionPattern.pattern,
+            cause.simpleClassNameOrNone,
+            cause.messageOrNone,
+            cause!!.stackTrace[0].info
+        )
+    } else Tree.EMPTY_MESSAGE
+
 val Throwable?.suppressedInfoOrNone: String
-    get() {
-        return if (this != null && this.suppressed.isNotEmpty()) {
-            val sB = StringBuilder()
-            suppressed.forEachIndexed { i, t ->
-                sB.append(t.formatAsSuppressed(i, suppressed.lastIndex))
-            }
-            sB.toString()
-        } else Tree.EMPTY_MESSAGE
-    }
+    get() = if (this != null && suppressed.isNotEmpty()) {
+        val sB = StringBuilder()
+        suppressed.forEachIndexed { i, t ->
+            sB.append(t.formatAsSuppressed(i, suppressed.lastIndex))
+        }
+        sB.toString()
+    } else Tree.EMPTY_MESSAGE
+
 
 private fun Throwable.formatAsSuppressed(index: Int, lastIndex: Int) = String.format(
     SuppressedExceptionPattern.get(index, lastIndex),

@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">Weather Forecast</string>
+    <string name="app_name" translatable="false">Weather Forecast</string>
+
+    <string name="error_fetching_queries">An error happened</string>
+    <string name="error_fetching_locations">An error happened</string>
+
+    <string name="alert_description">Warning sign</string>
+<!--    <string name="weather_icon_description">Weather icon</string>-->
+    <string name="air_quality_description">Circle</string>
+    <string name="visibility_description">Eye</string>
+    <string name="humidity_description">Water drop</string>
+    <string name="uvi_description">Sun</string>
+    <string name="wind_description">Wind</string>
+    <string name="wind_vane_description">Wind wane</string>
 </resources>

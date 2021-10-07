@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App bar -->
+    <string name="location_searcher_hint">Potražite mjesto</string>
+    <string name="clear_button_description">X znak</string>
+    <string name="up_button_description">Strijela usmjerena lijevo</string>
+    <string name="magnifier_icon_description">Povećalo</string>
+    <string name="overflow_button_description">Kolona s tri tačke</string>
+    <string name="country_flag_description">Državna zastava</string>
+
+    <!-- Body -->
+    <string name="wifi_off_description">Wi-Fi isključen</string>
+    <string name="wifi_off_text">Nema internet konekcije</string>
+    <string name="wifi_on_description">Wi-Fi uključen</string>
+    <string name="wifi_on_text">Ponovno online</string>
+    <string name="weather_icon_description">Vrijeme</string>
+    <string name="history_icon_description">Historija pretraživanja</string>
+    <string name="places_empty_message">Potražite mjesto, čija vremenska prognoza vas interesuje.</string>
+    <string name="queries_empty_message">Novi početak, počnite pretraživati…</string>
+    <string name="locations_empty_message">Ništa nije pronađeno…</string>
+    <string name="locations_error_message">Preuzimanje neuspjelo…</string>
+    <string name="locations_action_message">Provjerite internet konekciju i pokušajte ponovno.</string>
+</resources>

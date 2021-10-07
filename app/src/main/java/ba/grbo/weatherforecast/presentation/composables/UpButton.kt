@@ -1,17 +1,13 @@
 package ba.grbo.weatherforecast.presentation.composables
 
-import android.content.res.Configuration
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.TextFieldDefaults
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
+import ba.grbo.weatherforecast.R
 
 @Composable
 fun UpButton(
@@ -19,33 +15,23 @@ fun UpButton(
     enabled: Boolean,
     onClick: () -> Unit
 ) {
-    IconButton(
+    LocationSearcherButton(
         modifier = modifier,
-        onClick = onClick,
-    ) {
-        Icon(
-            imageVector = Icons.Default.ArrowBack,
-            contentDescription = "ArrowBack",
-            tint = MaterialTheme.colors.onSurface.copy(
-                alpha = if (enabled) TextFieldDefaults.IconOpacity
-                else ContentAlpha.disabled
-            )
-        )
-    }
+        enabled = enabled,
+        icon = Icons.Default.ArrowBack,
+        iconDescription = stringResource(id = R.string.up_button_description),
+        onClick = onClick
+    )
 }
 
+@Preview(name = "Enabled")
 @Preview(
-    name = "Light-Enabled",
-    showBackground = true
-)
-@Preview(
-    name = "Dark-Enabled",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    name = "Enabled",
+    uiMode = UI_MODE_NIGHT_YES
 )
 @Composable
 private fun UpButtonEnabledPreview() {
-    WeatherForecastTheme {
+    Preview {
         UpButton(
             enabled = true,
             onClick = {}
@@ -53,18 +39,14 @@ private fun UpButtonEnabledPreview() {
     }
 }
 
+@Preview(name = "Disabled")
 @Preview(
-    name = "Light-Disabled",
-    showBackground = true
-)
-@Preview(
-    name = "Dark-Disabled",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    name = "Disabled",
+    uiMode = UI_MODE_NIGHT_YES
 )
 @Composable
 private fun UpButtonDisabledPreview() {
-    WeatherForecastTheme {
+    Preview {
         UpButton(
             enabled = false,
             onClick = {}

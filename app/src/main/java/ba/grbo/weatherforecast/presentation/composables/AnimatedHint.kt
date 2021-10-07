@@ -1,107 +1,86 @@
 package ba.grbo.weatherforecast.presentation.composables
 
-import android.content.res.Configuration
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material.Surface
+import androidx.compose.animation.core.AnimationConstants
+import androidx.compose.animation.core.AnimationConstants.DefaultDurationMillis
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.tooling.preview.Preview
+import ba.grbo.weatherforecast.R
+import ba.grbo.weatherforecast.framework.mics.Constants.LocationSearcherHintExitAnimationDuration
 import ba.grbo.weatherforecast.framework.mics.customFadeIn
 import ba.grbo.weatherforecast.framework.mics.customFadeOut
-import ba.grbo.weatherforecast.framework.theme.WeatherForecastTheme
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AnimatedHint(visible: Boolean, enabled: Boolean) {
     AnimatedVisibility(
         visible = visible,
-        enter = customFadeIn(150), // total has to be 300, 150 + 150 (resetQuery animation)
-        exit = customFadeOut()
+        enter = customFadeIn(DefaultDurationMillis / 2), // 150 + 150 (resetQuery animation)
+        exit = customFadeOut(LocationSearcherHintExitAnimationDuration),
     ) {
         Hint(enabled = enabled)
     }
 }
 
+@Preview(name = "VisibleEnabled")
 @Preview(
-    name = "Light-VisibleEnabled",
-    showBackground = true
-)
-@Preview(
-    name = "Dark-VisibleEnabled",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    name = "VisibleEnabled",
+    uiMode = UI_MODE_NIGHT_YES
 )
 @Composable
 private fun AnimatedHintVisibleEnabledPreview() {
-    WeatherForecastTheme {
-        Surface {
-            AnimatedHint(
-                visible = true,
-                enabled = true
-            )
-        }
+    Preview {
+        AnimatedHint(
+            visible = true,
+            enabled = true
+        )
     }
 }
 
+@Preview(name = "VisibleDisabled")
 @Preview(
-    name = "Light-VisibleDisabled",
-    showBackground = true
-)
-@Preview(
-    name = "Dark-VisibleDisabled",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    name = "VisibleDisabled",
+    uiMode = UI_MODE_NIGHT_YES
 )
 @Composable
 private fun AnimatedHintVisibleDisabledPreview() {
-    WeatherForecastTheme {
-        Surface {
-            AnimatedHint(
-                visible = true,
-                enabled = false
-            )
-        }
+    Preview {
+        AnimatedHint(
+            visible = true,
+            enabled = false
+        )
     }
 }
 
+@Preview(name = "InvisibleEnabled")
 @Preview(
-    name = "Light-InvisibleEnabled",
-    showBackground = true
-)
-@Preview(
-    name = "Dark-InvisibleEnabled",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    name = "InvisibleEnabled",
+    uiMode = UI_MODE_NIGHT_YES
 )
 @Composable
 private fun AnimatedHintInvisibleEnabledPreview() {
-    WeatherForecastTheme {
-        Surface {
-            AnimatedHint(
-                visible = false,
-                enabled = true
-            )
-        }
+    Preview {
+        AnimatedHint(
+            visible = false,
+            enabled = true
+        )
     }
 }
 
+@Preview(name = "InvisibleDisabled")
 @Preview(
-    name = "Light-InvisibleDisabled",
-    showBackground = true
-)
-@Preview(
-    name = "Dark-InvisibleDisabled",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    name = "InvisibleDisabled",
+    uiMode = UI_MODE_NIGHT_YES
 )
 @Composable
 private fun AnimatedHintInvisibleDisabledPreview() {
-    WeatherForecastTheme {
-        Surface {
-            AnimatedHint(
-                visible = false,
-                enabled = false
-            )
-        }
+    Preview {
+        AnimatedHint(
+            visible = false,
+            enabled = false
+        )
     }
 }

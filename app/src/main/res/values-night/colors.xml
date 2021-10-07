@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <color name="navigation_bar_divider">#1FFFFFFF</color>
-    <color name="background">#FF191919</color>
+    <!-- Equivalent of 1F383838 but without any transparency -->
+    <color name="background">#171717</color>
     <color name="bars" tools:ignore="MissingDefaultResource">#FF121212</color>
 </resources>

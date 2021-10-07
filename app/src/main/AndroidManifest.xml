@@ -10,13 +10,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.WeatherForecast">
+        android:theme="@style/Theme.SplashScreen">
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".presentation.WeatherForecastActivity"
+            android:configChanges="orientation|screenSize|uiMode"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.WeatherForecast.NoActionBar">
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

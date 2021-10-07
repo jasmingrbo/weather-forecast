@@ -6,6 +6,9 @@ import ba.grbo.weatherforecast.framework.logging.Tree.Companion.DEBUG_TREE
 import ba.grbo.weatherforecast.framework.logging.Tree.Companion.RELEASE_TREE
 import timber.log.Timber
 
+// Logger is not complete::
+// Fix some bugs, implement recursive suppressed and cause exceptions
+
 object DefaultLogger : Logger {
 
     override fun init() {

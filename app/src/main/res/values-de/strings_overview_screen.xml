@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App bar -->
+    <string name="location_searcher_hint">Suchen Sie nach einem Ort</string>
+    <string name="clear_button_description">X Zeichen</string>
+    <string name="up_button_description">Links zeigender Pfeil</string>
+    <string name="magnifier_icon_description">Vergrößerungsglas</string>
+    <string name="overflow_button_description">Kolonne mit drei Punkten</string>
+    <string name="country_flag_description">Länderflagge</string>
+
+    <!-- Body -->
+    <string name="wifi_off_description">Wi-Fi an</string>
+    <string name="wifi_off_text">Keine Internetverbindung</string>
+    <string name="wifi_on_description">Wi-Fi aus</string>
+    <string name="wifi_on_text">Wieder online</string>
+    <string name="weather_icon_description">Wetter</string>
+    <string name="history_icon_description">Abfrageverlauf</string>
+    <string name="places_empty_message">Suchen Sie nach einem Ort, an dessen Wettervorhersage Sie interessiert sind.</string>
+    <string name="queries_empty_message">Neuanfang, mit der Suche beginnen…</string>
+    <string name="locations_empty_message">Nichts gefunden…</string>
+    <string name="locations_error_message">Abruf fehlgeschlagen…</string>
+    <string name="locations_action_message">Überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.</string>
+</resources>
