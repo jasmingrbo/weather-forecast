@@ -27,12 +27,12 @@ Libraries used:
 
 Some screenshots:
 
-![1](https://i.postimg.cc/xCDkVv7W/Screenshot-1636526371.png)
-![2](https://i.postimg.cc/KjVSCNpT/Screenshot-1636526490.png)
-![3](https://i.postimg.cc/JhKF9xGh/Screenshot-1636526563.png)
-![4](https://i.postimg.cc/RZSyG2ZY/Screenshot-1636526612.png)
-![5](https://i.postimg.cc/7hG4XdP7/Screenshot-1636527090.png)
-![6](https://i.postimg.cc/152VK1Bm/Screenshot-1636526751.png)
-![7](https://i.postimg.cc/MpwMLbCN/Screenshot-1636526810.png)
-![8](https://i.postimg.cc/jjjJt6s5/Screenshot-1636528901.png)
-![9](https://i.postimg.cc/RhwWXXTP/Screenshot-1636528907.png)
+![1](./screenshots/1.png)
+![2](./screenshots/2.png)
+![3](./screenshots/3.png)
+![4](./screenshots/4.png)
+![5](./screenshots/5.png)
+![6](./screenshots/6.png)
+![7](./screenshots/7.png)
+![8](./screenshots/8.png)
+![9](./screenshots/9.png)
