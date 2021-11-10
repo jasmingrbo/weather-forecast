@@ -1,7 +1,9 @@
 # A weather forecast app
 
 A weather forecast app done using Android's new UI toolkit Jetpack Compose. This project utilizes the clean architecture approach with the MVVM architectural
-pattern.
+pattern. 
+
+For the simplified version of this project, done using the Android's View system visit https://github.com/grb0/weather-checker.
 
 
 The app is in unfinished state. Things to be done:
