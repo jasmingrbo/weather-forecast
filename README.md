@@ -1,4 +1,4 @@
-# Weather Forecast
+# A weather forecast app
 
 A weather forecast app done using Android's new UI toolkit Jetpack Compose. This project utilizes the clean architecture approach with the MVVM architectural
 pattern.
