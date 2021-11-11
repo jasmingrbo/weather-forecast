@@ -5,6 +5,4 @@ object Constants {
     const val LocationSearcherHintExitAnimationDuration = 25
     const val InternetStatusBannerExitAnimationDuration = 200
     const val InternetStatusBannerExitAnimationDelay = 3000
-
-
 }
